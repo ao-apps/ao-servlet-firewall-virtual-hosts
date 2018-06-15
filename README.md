@@ -33,6 +33,9 @@ Virtual host support for servlet-based application request filtering.
 * [Maven Central Repository](https://search.maven.org/#search%7Cgav%7C1%7Cg:%22com.aoindustries%22%20AND%20a:%22ao-servlet-firewall-virtual-hosts%22)
 * [GitHub](https://github.com/aoindustries/ao-servlet-firewall-virtual-hosts)
 
+## Modules
+* [AO Servlet Firewall Virtual Hosts Path Space](https://aoindustries.com/ao-servlet-firewall/virtual-hosts/path-space/)
+
 ## Features
 * TODO: Define features
 * Small footprint, minimal dependencies - not part of a big monolithic package.

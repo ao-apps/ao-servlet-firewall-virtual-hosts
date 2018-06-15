@@ -34,9 +34,11 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 		shortTitle="@{documented.shortTitle}"
 		description="@{documented.description}"
 		datePublished="2018-06-14T23:12:12-0500"
+		dateModified="2018-06-15T00:18:23-0500"
 	>
 		<core:child page="changelog" />
 		<core:child page="apidocs/" />
+		<core:child book="/ao-servlet-firewall/virtual-hosts/path-space" page="/" />
 		<ao:include
 			page="/ao-badges/badges.inc.jspx"
 			arg.projectStatus="${currentPage.property.projectStatus}"
@@ -57,6 +59,11 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 				<li><core:link page="apidocs/">API Docs</core:link></li>
 				<li><ao:a href="https://search.maven.org/#search%7Cgav%7C1%7Cg:%22@{documented.groupId}%22%20AND%20a:%22@{documented.artifactId}%22">Maven Central Repository</ao:a></li>
 				<li><ao:a href="@{documented.scm.url}">GitHub</ao:a></li>
+			</ul>
+		</section:section>
+		<section:section label="Modules">
+			<ul>
+				<li><core:link book="/ao-servlet-firewall/virtual-hosts/path-space" page="/" /></li>
 			</ul>
 		</section:section>
 		<section:section label="Features">

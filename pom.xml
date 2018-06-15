@@ -36,6 +36,12 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 		<javadoc.breadcrumbs><![CDATA[<a target="_top" href="https://aoindustries.com/ao-servlet-firewall/">AO Servlet Firewall</a>
 / <a target="_top" href="${project.url}">${shortTitle}</a>]]></javadoc.breadcrumbs>
 		<shortTitle>Virtual Hosts</shortTitle>
+		<javadoc.modules><![CDATA[<div style="float:left; margin: 0 1em">
+			<h2 style="margin-top: 0em">Modules</h2>
+			<ul>
+				<li><a target="_top" href="https://aoindustries.com/ao-servlet-firewall/virtual-hosts/path-space/">AO Servlet Firewall Virtual Hosts Path Space</a></li>
+			</ul>
+		</div>]]></javadoc.modules>
 	</properties>
 
 	<name>AO Servlet Firewall Virtual Hosts</name>
