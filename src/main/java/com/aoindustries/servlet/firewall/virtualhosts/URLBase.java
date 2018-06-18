@@ -79,7 +79,7 @@ public class URLBase implements Comparable<URLBase> {
 	/**
 	 * The value used to represent {@code null} {@link #prefix}.
 	 */
-	private static final String NULL_PREFIX = NULL_CONTEXT_PATH;
+	private static final String NULL_PREFIX = Path.SEPARATOR_STRING + WILDCARD_CHAR + WILDCARD_CHAR;
 
 	/**
 	 * A base that matches all requests, useful for default hosts.
