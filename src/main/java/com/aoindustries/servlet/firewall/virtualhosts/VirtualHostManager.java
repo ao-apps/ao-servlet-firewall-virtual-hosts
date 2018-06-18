@@ -39,7 +39,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 /**
  * Manages the mapping of incoming requests to {@link VirtualHost virtual host} and
@@ -253,7 +253,7 @@ public class VirtualHostManager {
 	 * the same {@link URLBase}, but only the first one is kept here.  This is the order requests
 	 * are searched in {@link #search(javax.servlet.http.HttpServletRequest)}.
 	 */
-	private final Map<URLBase,Pair<Environment,DomainName>> searchOrder = new LinkedHashMap<URLBase,Pair<Environment,DomainName>>();
+	private final Map<URLBase,ImmutablePair<Environment,DomainName>> searchOrder = new LinkedHashMap<URLBase,ImmutablePair<Environment,DomainName>>();
 
 	/**
 	 * Adds a new item to the search order, if the base has not already been used.
@@ -267,7 +267,7 @@ public class VirtualHostManager {
 			!searchOrder.containsKey(base)
 			&& searchOrder.put(
 				base,
-				Pair.of(environment, domain)
+				ImmutablePair.of(environment, domain)
 			) != null
 		) throw new AssertionError();
 	}
@@ -320,7 +320,7 @@ public class VirtualHostManager {
 				Port requestPort = null;
 				String requestContextPath = null;
 				String requestPath = null;
-				for(Map.Entry<URLBase,Pair<Environment,DomainName>> entry : searchOrder.entrySet()) {
+				for(Map.Entry<URLBase,ImmutablePair<Environment,DomainName>> entry : searchOrder.entrySet()) {
 					URLBase base = entry.getKey();
 					String scheme = base.getScheme();
 					if(scheme != null) {
@@ -394,7 +394,7 @@ public class VirtualHostManager {
 							basePath
 						);
 					}
-					Pair<Environment,DomainName> pair = entry.getValue();
+					ImmutablePair<Environment,DomainName> pair = entry.getValue();
 					DomainName domain = pair.getRight();
 					return new VirtualHostMatch(
 						pair.getLeft(),
