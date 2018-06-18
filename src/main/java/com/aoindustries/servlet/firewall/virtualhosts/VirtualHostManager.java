@@ -24,13 +24,22 @@ package com.aoindustries.servlet.firewall.virtualhosts;
 
 import com.aoindustries.net.DomainName;
 import com.aoindustries.net.HostAddress;
+import com.aoindustries.net.InetAddress;
 import com.aoindustries.net.Path;
+import com.aoindustries.net.Port;
+import com.aoindustries.net.Protocol;
+import com.aoindustries.servlet.firewall.api.Rule;
+import com.aoindustries.validation.ValidationException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Manages the mapping of incoming requests to {@link VirtualHost virtual host} and
@@ -104,6 +113,7 @@ import javax.servlet.ServletContext;
  */
 public class VirtualHostManager {
 
+	// <editor-fold defaultstate="collapsed" desc="Instance Management">
 	private static final String APPLICATION_ATTRIBUTE_NAME = VirtualHostManager.class.getName();
 
 	private static class InstanceLock extends Object {}
@@ -124,64 +134,84 @@ public class VirtualHostManager {
 			return instance;
 		}
 	}
+	// </editor-fold>
 
-	private final Lock readLock;
-	private final Lock writeLock;
-	{
-		ReadWriteLock rwLock = new ReentrantReadWriteLock();
-		readLock = rwLock.readLock();
-		writeLock = rwLock.writeLock();
-	}
-
-	private final Map<DomainName,VirtualHost> virtualHosts = new LinkedHashMap<DomainName,VirtualHost>();
-
-	private final Map<HostAddress,Map<Path,VirtualHost>> mappings = new LinkedHashMap<HostAddress,Map<Path,VirtualHost>>();
+	// Locks shared from Environment to avoid possible deadlock
+	private final ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
+	final Lock readLock = rwLock.readLock();
+	final Lock writeLock = rwLock.writeLock();
 
 	private VirtualHostManager() {}
 
+	// <editor-fold defaultstate="collapsed" desc="Virtual Hosts">
+	private final Map<DomainName,VirtualHost> virtualHosts = new LinkedHashMap<DomainName,VirtualHost>();
+
 	/**
-	 * Registers a new virtual host.
+	 * Creates a new virtual host.
 	 *
-	 * @throws  IllegalArgumentException  If a virtual host already exists on the {@link VirtualHost#getDomain() host's domain}.
+	 * @param  canonicalBase  When {@code null}, a canonical base will be generated via {@link VirtualHost#generateCanonicalBase(com.aoindustries.net.DomainName)}.
+	 *
+	 * @throws  IllegalStateException  If a virtual host already exists on the {@link VirtualHost#getDomain() host's domain}.
 	 */
-	public VirtualHostManager add(VirtualHost vhost) throws IllegalArgumentException {
+	public VirtualHost newVirtualHost(DomainName domain, URLBase canonicalBase, Iterable<? extends Rule> rules) throws IllegalStateException {
 		writeLock.lock();
 		try {
-			DomainName domain = vhost.getDomain();
-			if(virtualHosts.containsKey(domain)) throw new IllegalArgumentException("Virtual host with the domain already exists: " + domain);
+			if(virtualHosts.containsKey(domain)) throw new IllegalStateException("Virtual host with the domain already exists: " + domain);
+			VirtualHost vhost = new VirtualHost(domain, canonicalBase);
+			vhost.append(rules);
 			if(virtualHosts.put(domain, vhost) != null) throw new AssertionError();
+			return vhost;
 		} finally {
 			writeLock.unlock();
 		}
-		return this;
 	}
 
 	/**
-	 * Registers any number of new virtual hosts.
+	 * Creates a new virtual host.
 	 *
-	 * @throws  IllegalArgumentException  If a virtual host already exists on the {@link VirtualHost#getDomain() host's domain}.
+	 * @param  canonicalBase  When {@code null}, a canonical base will be generated via {@link VirtualHost#generateCanonicalBase(com.aoindustries.net.DomainName)}.
+	 *
+	 * @throws  IllegalStateException  If a virtual host already exists on the {@link VirtualHost#getDomain() host's domain}.
 	 */
-	// TODO: Rename "register" or "allocate" to be more clear this is reserving a space?
-	public VirtualHostManager add(VirtualHost ... vhosts) throws IllegalArgumentException {
-		writeLock.lock();
-		try {
-			for(VirtualHost vhost : vhosts) add(vhost);
-		} finally {
-			writeLock.unlock();
-		}
-		return this;
+	public VirtualHost newVirtualHost(DomainName domain, URLBase canonicalBase, Rule ... rules) throws IllegalStateException {
+		return newVirtualHost(domain, canonicalBase, Arrays.asList(rules));
 	}
 
-	// TODO: add overloads matching the static factory methods of VirtualHost?
-	//       Move those factory methods here instead, so there cannot be VirtualHost in unregistered form?
-	//       Remove varargs method and use method chaining if we go this route.
+	/**
+	 * Creates a new virtual host.
+	 * Generates a default canonical base as <code>https://${domain}/</code>.
+	 *
+	 * @see  VirtualHost#generateCanonicalBase(com.aoindustries.net.DomainName)
+	 *
+	 * @throws  IllegalStateException  If a virtual host already exists on the {@link VirtualHost#getDomain() host's domain}.
+	 */
+	public VirtualHost newVirtualHost(DomainName domain, Iterable<? extends Rule> rules) throws IllegalStateException {
+		return newVirtualHost(domain, null, rules);
+	}
+
+	/**
+	 * Creates a new virtual host.
+	 * Generates a default canonical base as <code>https://${domain}/</code>.
+	 *
+	 * @see  VirtualHost#generateCanonicalBase(com.aoindustries.net.DomainName)
+	 *
+	 * @throws  IllegalStateException  If a virtual host already exists on the {@link VirtualHost#getDomain() host's domain}.
+	 */
+	public VirtualHost newVirtualHost(DomainName domain, Rule ... rules) throws IllegalStateException {
+		return newVirtualHost(domain, null, Arrays.asList(rules));
+	}
 
 	// TODO: remove?
 
 	/**
 	 * Finds the virtual host registered at the given domain.
+	 *
+	 * @see  #newVirtualHost(com.aoindustries.net.DomainName, com.aoindustries.servlet.firewall.virtualhosts.URLBase, java.lang.Iterable)
+	 * @see  #newVirtualHost(com.aoindustries.net.DomainName, com.aoindustries.servlet.firewall.virtualhosts.URLBase, com.aoindustries.servlet.firewall.api.Rule...)
+	 * @see  #newVirtualHost(com.aoindustries.net.DomainName, java.lang.Iterable)
+	 * @see  #newVirtualHost(com.aoindustries.net.DomainName, com.aoindustries.servlet.firewall.api.Rule...)
 	 */
-	public VirtualHost get(DomainName domain) {
+	public VirtualHost getVirtualHost(DomainName domain) {
 		readLock.lock();
 		try {
 			return virtualHosts.get(domain);
@@ -189,6 +219,201 @@ public class VirtualHostManager {
 			readLock.unlock();
 		}
 	}
+	// </editor-fold>
 
-	// TODO: Environments, with environment attributes
+	// <editor-fold defaultstate="collapsed" desc="Environments">
+	/**
+	 * Contains all environments, in the order created.
+	 */
+	private final Map<String,Environment> environmentsByName = new LinkedHashMap<String,Environment>();
+
+	/**
+	 * Creates a new, empty environment.
+	 *
+	 * @throws  IllegalStateException  If an environment already exists with this name.
+	 */
+	public Environment newEnvironment(String name) throws IllegalStateException {
+		writeLock.lock();
+		try {
+			if(environmentsByName.containsKey(name)) {
+				throw new IllegalStateException("Environment already exists with name: " + name);
+			}
+			Environment environment = new Environment(this, name);
+			environmentsByName.put(name, environment);
+			return environment;
+		} finally {
+			writeLock.unlock();
+		}
+	}
+	// </editor-fold>
+
+	// <editor-fold defaultstate="collapsed" desc="Request Matching">
+	/**
+	 * Contains the first environment added for each unique base.  It is possible for multiple environments to have
+	 * the same {@link URLBase}, but only the first one is kept here.  This is the order requests
+	 * are searched in {@link #search(javax.servlet.http.HttpServletRequest)}.
+	 */
+	private final Map<URLBase,Pair<Environment,DomainName>> searchOrder = new LinkedHashMap<URLBase,Pair<Environment,DomainName>>();
+
+	/**
+	 * Adds a new item to the search order, if the base has not already been used.
+	 *
+	 * @see  Environment#add(java.util.Map)
+	 */
+	void addSearchOrder(URLBase base, Environment environment, DomainName domain) {
+		assert rwLock.isWriteLockedByCurrentThread();
+		if(
+			// Keep first occurrence per base
+			!searchOrder.containsKey(base)
+			&& searchOrder.put(
+				base,
+				Pair.of(environment, domain)
+			) != null
+		) throw new AssertionError();
+	}
+
+	private static HostAddress getRequestHost(ServletRequest request) throws ValidationException {
+		String serverName = request.getServerName();
+		int serverNameLen = serverName.length();
+		if(
+			serverNameLen >= 2
+			&& serverName.charAt(0) == '['
+			&& serverName.charAt(serverNameLen - 1) == ']'
+		) {
+			// Parse as IPv6 address
+			return HostAddress.valueOf(
+				InetAddress.valueOf(serverName.substring(1, serverNameLen - 1))
+			);
+		} else {
+			// Use default parsing
+			return HostAddress.valueOf(serverName);
+		}
+	}
+
+	private static Port getRequestPort(ServletRequest request) throws ValidationException {
+		return Port.valueOf(
+			request.getServerPort(),
+			Protocol.TCP // Assuming TCP here
+		);
+	}
+
+	/**
+	 * Matches the given request to an {@link Environment environment} and
+	 * {@link VirtualHost virtual host}.
+	 * <p>
+	 * Search the environments in the order added.
+	 * Within each environment, searches the {@link URLBase bases}
+	 * in the order added.
+	 * </p>
+	 *
+	 * @return  The match or {@code null} if no match found.
+	 *
+	 * @throws ServletException when a request value is incompatible with the self-validating types
+	 */
+	public VirtualHostMatch search(HttpServletRequest request) throws ServletException {
+		try {
+			readLock.lock();
+			try {
+				// Fields obtained from request as-needed
+				String requestScheme = null;
+				HostAddress requestHost = null;
+				Port requestPort = null;
+				String requestContextPath = null;
+				String requestPath = null;
+				for(Map.Entry<URLBase,Pair<Environment,DomainName>> entry : searchOrder.entrySet()) {
+					URLBase base = entry.getKey();
+					String scheme = base.getScheme();
+					if(scheme != null) {
+						if(requestScheme == null) requestScheme = request.getScheme();
+						if(!scheme.equalsIgnoreCase(requestScheme)) continue;
+					}
+					HostAddress host = base.getHost();
+					if(host != null) {
+						if(requestHost == null) requestHost = getRequestHost(request);
+						if(!host.equals(requestHost)) continue;
+					}
+					Port port = base.getPort();
+					if(port != null) {
+						if(requestPort == null) getRequestPort(request);
+						if(!port.equals(requestPort)) continue;
+					}
+					Path contextPath = base.getContextPath();
+					if(contextPath != null) {
+						if(requestContextPath == null) requestContextPath = request.getContextPath();
+						if(contextPath == Path.ROOT) {
+							if(!requestContextPath.isEmpty()) continue;
+						} else {
+							if(!contextPath.toString().equals(requestContextPath)) continue;
+						}
+					}
+					Path basePath = base.getBase();
+					if(requestPath == null) {
+						requestPath = request.getServletPath();
+						String pathInfo = request.getPathInfo();
+						if(pathInfo != null) requestPath += pathInfo;
+					}
+					String basePathStr = basePath.toString();
+					if(!requestPath.startsWith(basePathStr)) continue;
+					URLBase completeBase;
+					if(base.isComplete()) {
+						completeBase = base;
+					} else {
+						String completeScheme;
+						if(scheme == null) {
+							if(requestScheme == null) requestScheme = request.getScheme();
+							completeScheme = requestScheme;
+						} else {
+							completeScheme = scheme;
+						}
+						HostAddress completeHost;
+						if(host == null) {
+							if(requestHost == null) requestHost = getRequestHost(request);
+							completeHost = requestHost;
+						} else {
+							completeHost = host;
+						}
+						Port completePort;
+						if(port == null) {
+							if(requestPort == null) requestPort = getRequestPort(request);
+							completePort = requestPort;
+						} else {
+							completePort = port;
+						}
+						Path completeContextPath;
+						if(contextPath == null) {
+							if(requestContextPath == null) requestContextPath = request.getContextPath();
+							completeContextPath = requestContextPath.isEmpty() ? Path.ROOT : Path.valueOf(requestContextPath);
+						} else {
+							completeContextPath = contextPath;
+						}
+						completeBase = new URLBase(
+							completeScheme,
+							completeHost,
+							completePort,
+							completeContextPath,
+							basePath
+						);
+					}
+					Pair<Environment,DomainName> pair = entry.getValue();
+					DomainName domain = pair.getRight();
+					return new VirtualHostMatch(
+						pair.getLeft(),
+						base,
+						completeBase,
+						virtualHosts.get(domain),
+						new VirtualPath(
+							domain,
+							Path.valueOf(requestPath.substring(basePathStr.length() - 1))
+						)
+					);
+				}
+				return null;
+			} finally {
+				readLock.unlock();
+			}
+		} catch(ValidationException e) {
+			throw new ServletException(e);
+		}
+	}
+	// </editor-fold>
 }

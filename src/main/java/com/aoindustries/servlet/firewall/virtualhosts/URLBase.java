@@ -41,7 +41,6 @@ import org.apache.commons.lang3.ObjectUtils;
  * an instance of {@link URL}, see {@link 
  * </p>
  */
-// TODO: allow null with missing values taken from the request
 public class URLBase implements Comparable<URLBase> {
 
 	/**
@@ -213,6 +212,27 @@ public class URLBase implements Comparable<URLBase> {
 	}
 
 	/**
+	 * Checks if this base is complete (has no {@code null} fields).
+	 * A complete base may be converted to a {@link URL} without any
+	 * {@link HttpServletRequest request} provided.
+	 *
+	 * @see  #toURL(javax.servlet.http.HttpServletRequest)
+	 */
+	public boolean isComplete() {
+		if(
+			scheme != null
+			&& host != null
+			&& port != null
+			&& contextPath != null
+		) {
+			assert base != null;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Gets the general-purpose representation of {@link URL} for this base.
 	 *
 	 * @param  request   Only used when at least one field is {@code null} and uses the value
@@ -220,6 +240,8 @@ public class URLBase implements Comparable<URLBase> {
 	 *                   to have all fields specified.
 	 *
 	 * @throws NullPointerException when {@code request} not provided and at least one field is {@code null}.
+	 *
+	 * @see  #isComplete()
 	 */
 	public URL toURL(HttpServletRequest request) {
 		String schemeStr = (scheme == null) ? request.getScheme() : scheme;

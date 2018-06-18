@@ -39,22 +39,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.servlet.ServletRequest;
 
 /**
- * A {@link VirtualHost} maps one or more {@link HostAddress} to a list of per-virtual-host
+ * A {@link VirtualHost} is matched from one or more {@link URLBase} and contains a list of per-virtual-host
  * {@link Rule rules}.  These rules are called after global rules for requests that
  * match the domains.
  */
 // TODO: Per-virtual-host attributes?
 public class VirtualHost {
-
-	public static VirtualHost newInstance(DomainName domain, URLBase canonicalBase, Iterable<? extends Rule> rules) {
-		VirtualHost vhost = new VirtualHost(domain, canonicalBase);
-		vhost.append(rules);
-		return vhost;
-	}
-
-	public static VirtualHost newInstance(DomainName domain, URLBase canonicalBase, Rule ... rules) {
-		return newInstance(domain, canonicalBase, Arrays.asList(rules));
-	}
 
 	private static final Port HTTPS_PORT;
 	static {
@@ -66,9 +56,9 @@ public class VirtualHost {
 	}
 
 	/**
-	 * Generates the default URL base for the given domain.
+	 * Generates the default URL base for the given domain as <code>https://${domain}/</code>.
 	 */
-	private static URLBase generateCanonicalBase(DomainName domain) {
+	public static URLBase generateCanonicalBase(DomainName domain) {
 		return new URLBase(
 			URLBase.HTTPS,
 			HostAddress.valueOf(domain),
@@ -78,28 +68,14 @@ public class VirtualHost {
 		);
 	}
 
-	/**
-	 * Generates a default canonical base as <code>https://${domain}/</code>.
-	 */
-	public static VirtualHost newInstance(DomainName domain, Iterable<? extends Rule> rules) {
-		return newInstance(domain, generateCanonicalBase(domain), rules);
-	}
-
-	/**
-	 * Generates a default canonical base as <code>https://${domain}/</code>.
-	 */
-	public static VirtualHost newInstance(DomainName domain, Rule ... rules) {
-		return newInstance(domain, Arrays.asList(rules));
-	}
-
 	private final DomainName domain;
 	private final URLBase canonicalBase;
 
 	private final List<Rule> rules = new CopyOnWriteArrayList<Rule>();
 
-	private VirtualHost(DomainName domain, URLBase canonicalBase) {
+	VirtualHost(DomainName domain, URLBase canonicalBase) {
 		this.domain = NullArgumentException.checkNotNull(domain, "domain");
-		this.canonicalBase = NullArgumentException.checkNotNull(canonicalBase, "canonicalBase");
+		this.canonicalBase = (canonicalBase == null) ? generateCanonicalBase(domain) : canonicalBase;
 	}
 
 	/**
@@ -114,6 +90,18 @@ public class VirtualHost {
 	 */
 	public DomainName getDomain() {
 		return domain;
+	}
+
+	/**
+	 * A virtual host always has a canonical base.  This is used to generate
+	 * URLs to the virtual host when there is no matching {@link Environment environment}.
+	 * <p>
+	 * This canonical base may have {@code null} fields, which will be taken from
+	 * the current {@link ServletRequest request}.
+	 * </p>
+	 */
+	public URLBase getCanonicalBase() {
+		return canonicalBase;
 	}
 
 	/**
@@ -174,17 +162,5 @@ public class VirtualHost {
 	 */
 	public void append(Rule ... rules) {
 		append(Arrays.asList(rules));
-	}
-
-	/**
-	 * A virtual host always has a canonical base.  This is used to generate
-	 * URLs to the virtual host when there is no matching Environment (TODO: link).
-	 * <p>
-	 * This canonical base may have {@code null} fields, which will be taken from
-	 * the current {@link ServletRequest request}.
-	 * </p>
-	 */
-	public URLBase getCanonicalBase() {
-		return canonicalBase;
 	}
 }
