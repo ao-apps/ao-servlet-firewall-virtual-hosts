@@ -33,12 +33,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.ObjectUtils;
 
 /**
- * A {@link URLBase} contains a scheme, host, port, and base.
- * The base always ends in a slash (/).
+ * A {@link URLBase} contains a scheme, host, port, contextPath, and prefix.
+ * All fields are optional.
  * <p>
  * This is not a general-purpose representation of a URL.  It only contains the
  * fields specifically used for matching a request to a virtual host.  For
  * an instance of {@link URL}, see {@link 
+ * </p>
+ * <p>
+ * A {@link URLBase} consisting of all null fields will match
+ * all requests and can serve as a match for a default host.
  * </p>
  */
 public class URLBase implements Comparable<URLBase> {
@@ -72,54 +76,81 @@ public class URLBase implements Comparable<URLBase> {
 	 */
 	private static final String NULL_CONTEXT_PATH = Path.SEPARATOR_STRING + WILDCARD_CHAR;
 
-	private final String scheme;
-	private final String schemeLower;
-	private final HostAddress host;
-	private final Port port;
-	private final Path contextPath;
-	private final Path base;
+	/**
+	 * The value used to represent {@code null} {@link #prefix}.
+	 */
+	private static final String NULL_PREFIX = NULL_CONTEXT_PATH;
 
 	/**
-	 * A base URL supporting {@link ServletRequest requests} across multiple schemes/hosts/ports/...
+	 * A base that matches all requests, useful for default hosts.
+	 */
+	public static final URLBase DEFAULT = new URLBase(null, null, null, null, null);
+
+	/**
+	 * Gets a base URL supporting {@link ServletRequest requests} across multiple schemes/hosts/ports/...
 	 * 
 	 * @param scheme       (Optional) The scheme (http/https/...) to match and/or link to
 	 * @param host         (Optional) The IP/host to match and/or link to
 	 * @param port         (Optional) The port to match and/or link to
 	 * @param contextPath  (Optional) The contextPath to match and/or link to
-	 * @param base         (Required) The base path (See {@link Path#ROOT} to match entire path space).
+	 * @param prefix       (Optional) The prefix to match against the path or {@code null} to match all.
+	 *                                Must be either {@code null} or always ends in a slash (/).
 	 *
-	 * @see  #URLBase(com.aoindustries.net.Path)
+	 * @see  #valueOf(com.aoindustries.net.Path)
+	 * @see  #URLBase(java.lang.String, com.aoindustries.net.HostAddress, com.aoindustries.net.Port, com.aoindustries.net.Path, com.aoindustries.net.Path)
 	 */
-	public URLBase(String scheme, HostAddress host, Port port, Path contextPath, Path base) {
+	public static URLBase valueOf(String scheme, HostAddress host, Port port, Path contextPath, Path prefix) {
+		if(
+			scheme == null
+			&& host == null
+			&& port == null
+			&& contextPath == null
+			&& prefix == null
+		) {
+			return DEFAULT;
+		} else {
+			return new URLBase(scheme, host, port, contextPath, prefix);
+		}
+	}
+
+	/**
+	 * Gets a base URL always within the current {@link ServletRequest request}.
+	 *
+	 * @param prefix       (Optional) The prefix to match against the path or {@code null} to match all.
+	 *                                Must be either {@code null} or always ends in a slash (/).
+	 *
+	 * @see  #valueOf(java.lang.String, com.aoindustries.net.HostAddress, com.aoindustries.net.Port, com.aoindustries.net.Path, com.aoindustries.net.Path)
+	 */
+	public static URLBase valueOf(Path prefix) {
+		return valueOf(null, null, null, null, prefix);
+	}
+
+	private final String scheme;
+	private final String schemeLower;
+	private final HostAddress host;
+	private final Port port;
+	private final Path contextPath;
+	private final Path prefix;
+
+	/**
+	 * @see  #valueOf(java.lang.String, com.aoindustries.net.HostAddress, com.aoindustries.net.Port, com.aoindustries.net.Path, com.aoindustries.net.Path)
+	 */
+	private URLBase(String scheme, HostAddress host, Port port, Path contextPath, Path prefix) {
 		this.scheme = scheme;
 		this.schemeLower = (scheme == null) ? null : scheme.toLowerCase(Locale.ROOT);
 		this.host = host;
 		this.port = port;
 		if(contextPath != null && contextPath != Path.ROOT) {
 			String contextPathStr = contextPath.toString();
-			if(contextPathStr.equals(NULL_CONTEXT_PATH)) {
-				throw new IllegalArgumentException("Context path may not be " + NULL_CONTEXT_PATH);
-			}
 			if(contextPathStr.endsWith(Path.SEPARATOR_STRING)) {
 				throw new IllegalArgumentException("Non-root context path may not end in slash (" + Path.SEPARATOR_CHAR + "): " + contextPath);
 			}
 		}
 		this.contextPath = contextPath;
-		if(!base.toString().endsWith(Path.SEPARATOR_STRING)) {
-			throw new IllegalArgumentException("Base does not end in slash (" + Path.SEPARATOR_CHAR + "): " + base);
+		if(prefix != null && !prefix.toString().endsWith(Path.SEPARATOR_STRING)) {
+			throw new IllegalArgumentException("Prefix does not end in slash (" + Path.SEPARATOR_CHAR + "): " + prefix);
 		}
-		this.base = base;
-	}
-
-	/**
-	 * A base URL always within the current {@link ServletRequest request}.
-	 *
-	 * @param base  (Required) The base path (See {@link Path#ROOT} to match entire path space).
-	 *
-	 * @see  #URLBase(java.lang.String, com.aoindustries.net.HostAddress, com.aoindustries.net.Port, com.aoindustries.net.Path, com.aoindustries.net.Path)
-	 */
-	public URLBase(Path base) {
-		this(null, null, null, null, base);
+		this.prefix = prefix;
 	}
 
 	@Override
@@ -158,8 +189,8 @@ public class URLBase implements Comparable<URLBase> {
 			contextPathStr = NULL_CONTEXT_PATH;
 		}
 		toStringLen += contextPathStr.length();
-		String baseStr = base.toString();
-		toStringLen += baseStr.length();
+		String prefixStr = (prefix == null) ? NULL_PREFIX : prefix.toString();
+		toStringLen += prefixStr.length();
 		StringBuilder toString = new StringBuilder(toStringLen);
 		if(scheme != null) {
 			toString.append(scheme).append(':');
@@ -168,7 +199,7 @@ public class URLBase implements Comparable<URLBase> {
 		if(portStr != null) {
 			toString.append(':').append(portStr);
 		}
-		toString.append(contextPathStr).append(baseStr);
+		toString.append(contextPathStr).append(prefixStr);
 		assert toStringLen == toString.length();
 		return toString.toString();
 	}
@@ -183,7 +214,7 @@ public class URLBase implements Comparable<URLBase> {
 			&& ObjectUtils.equals(host, other.host)
 			&& ObjectUtils.equals(port, other.port)
 			&& ObjectUtils.equals(contextPath, other.contextPath)
-			&& base.equals(other.base);
+			&& ObjectUtils.equals(prefix, other.prefix);
 	}
 
 	@Override
@@ -194,7 +225,7 @@ public class URLBase implements Comparable<URLBase> {
 			host,
 			port,
 			contextPath,
-			base
+			prefix
 		);
 	}
 
@@ -204,7 +235,7 @@ public class URLBase implements Comparable<URLBase> {
 		if(diff != 0) return diff;
 		diff = ObjectUtils.compare(contextPath, other.contextPath);
 		if(diff != 0) return diff;
-		diff = base.compareTo(other.base);
+		diff = ObjectUtils.compare(prefix, other.prefix);
 		if(diff != 0) return diff;
 		diff = ObjectUtils.compare(port, other.port);
 		if(diff != 0) return diff;
@@ -212,24 +243,18 @@ public class URLBase implements Comparable<URLBase> {
 	}
 
 	/**
-	 * Checks if this base is complete (has no {@code null} fields).
+	 * Checks if this base is complete (has no {@code null} fields other than prefix).
 	 * A complete base may be converted to a {@link URL} without any
 	 * {@link HttpServletRequest request} provided.
 	 *
 	 * @see  #toURL(javax.servlet.http.HttpServletRequest)
 	 */
 	public boolean isComplete() {
-		if(
+		return
 			scheme != null
 			&& host != null
 			&& port != null
-			&& contextPath != null
-		) {
-			assert base != null;
-			return true;
-		} else {
-			return false;
-		}
+			&& contextPath != null;
 	}
 
 	/**
@@ -257,14 +282,22 @@ public class URLBase implements Comparable<URLBase> {
 		if(contextPath == null) {
 			String contextPathStr = request.getContextPath();
 			if(contextPathStr.isEmpty()) {
-				file = base.toString();
+				file = (prefix == null) ? "" : prefix.toString();
 			} else {
-				file = contextPathStr + base.toString();
+				if(prefix == null) {
+					file = contextPathStr;
+				} else {
+					file = contextPathStr + prefix.toString();
+				}
 			}
 		} else if(contextPath == Path.ROOT) {
-			file = base.toString();
+			file = (prefix == null) ? "" : prefix.toString();
 		} else {
-			file = contextPath.toString() + base.toString();
+			if(prefix == null) {
+				file = contextPath.toString();
+			} else {
+				file = contextPath.toString() + prefix.toString();
+			}
 		}
 		try {
 			return new URL(
@@ -319,9 +352,6 @@ public class URLBase implements Comparable<URLBase> {
 	/**
 	 * Gets the context path for this base URL, only ending in a slash (/) when is
 	 * {@link Path#ROOT the root context}.
-	 * <p>
-	 * Will never be /*, since this is used to represent a {@code null} value in the {@link #toString()}.
-	 * </p>
 	 *
 	 * @return  The context path or {@code null} when the {@link HttpServletRequest#getContextPath() context path of the request} should be used.
 	 *
@@ -332,14 +362,14 @@ public class URLBase implements Comparable<URLBase> {
 	}
 
 	/**
-	 * Gets the path for this base URL, always ending in a slash (/).
+	 * Gets the prefix of the path for this base URL, always either {@code null} or ending in a slash (/).
 	 *
 	 * @see  HttpServletRequest#getServletPath()
 	 * @see  HttpServletRequest#getPathInfo()
 	 * @see  URL#getFile()
 	 * @see  Path#SEPARATOR_CHAR
 	 */
-	public Path getBase() {
-		return base;
+	public Path getPrefix() {
+		return prefix;
 	}
 }

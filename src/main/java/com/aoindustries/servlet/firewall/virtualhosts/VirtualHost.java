@@ -56,15 +56,15 @@ public class VirtualHost {
 	}
 
 	/**
-	 * Generates the default URL base for the given domain as <code>https://${domain}/</code>.
+	 * Generates the default URL base for the given domain as <code>https://${domain}</code>.
 	 */
 	public static URLBase generateCanonicalBase(DomainName domain) {
-		return new URLBase(
+		return URLBase.valueOf(
 			URLBase.HTTPS,
 			HostAddress.valueOf(domain),
 			HTTPS_PORT,
 			Path.ROOT,
-			Path.ROOT
+			null
 		);
 	}
 

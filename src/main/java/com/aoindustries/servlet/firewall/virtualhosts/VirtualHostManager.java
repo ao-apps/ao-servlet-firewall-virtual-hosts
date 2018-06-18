@@ -179,7 +179,7 @@ public class VirtualHostManager {
 
 	/**
 	 * Creates a new virtual host.
-	 * Generates a default canonical base as <code>https://${domain}/</code>.
+	 * Generates a default canonical base as <code>https://${domain}</code>.
 	 *
 	 * @see  VirtualHost#generateCanonicalBase(com.aoindustries.net.DomainName)
 	 *
@@ -191,7 +191,7 @@ public class VirtualHostManager {
 
 	/**
 	 * Creates a new virtual host.
-	 * Generates a default canonical base as <code>https://${domain}/</code>.
+	 * Generates a default canonical base as <code>https://${domain}</code>.
 	 *
 	 * @see  VirtualHost#generateCanonicalBase(com.aoindustries.net.DomainName)
 	 *
@@ -346,14 +346,15 @@ public class VirtualHostManager {
 							if(!contextPath.toString().equals(requestContextPath)) continue;
 						}
 					}
-					Path basePath = base.getBase();
-					if(requestPath == null) {
-						requestPath = request.getServletPath();
-						String pathInfo = request.getPathInfo();
-						if(pathInfo != null) requestPath += pathInfo;
+					Path prefix = base.getPrefix();
+					if(prefix != null) {
+						if(requestPath == null) {
+							requestPath = request.getServletPath();
+							String pathInfo = request.getPathInfo();
+							if(pathInfo != null) requestPath += pathInfo;
+						}
+						if(!requestPath.startsWith(prefix.toString())) continue;
 					}
-					String basePathStr = basePath.toString();
-					if(!requestPath.startsWith(basePathStr)) continue;
 					URLBase completeBase;
 					if(base.isComplete()) {
 						completeBase = base;
@@ -386,13 +387,18 @@ public class VirtualHostManager {
 						} else {
 							completeContextPath = contextPath;
 						}
-						completeBase = new URLBase(
+						completeBase = URLBase.valueOf(
 							completeScheme,
 							completeHost,
 							completePort,
 							completeContextPath,
-							basePath
+							prefix
 						);
+					}
+					if(requestPath == null) {
+						requestPath = request.getServletPath();
+						String pathInfo = request.getPathInfo();
+						if(pathInfo != null) requestPath += pathInfo;
 					}
 					ImmutablePair<Environment,DomainName> pair = entry.getValue();
 					DomainName domain = pair.getRight();
@@ -403,7 +409,7 @@ public class VirtualHostManager {
 						virtualHosts.get(domain),
 						new VirtualPath(
 							domain,
-							Path.valueOf(requestPath.substring(basePathStr.length() - 1))
+							Path.valueOf(prefix == null ? requestPath : requestPath.substring(prefix.toString().length() - 1))
 						)
 					);
 				}
