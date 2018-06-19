@@ -79,7 +79,7 @@ public class Rules {
 		// TODO: Redirect to primary
 		// TODO: Redirect to canonical
 		// TODO: ao-servlet-fireall-virtual-hosts.xml?
-		// TODO: environment selectors, not just URL bases?  Like by username/hostname/... arbitrary expression?
+		// TODO: environment selectors, not just partial URLs?  Like by username/hostname/... arbitrary expression?
 
 		private virtualHostMatch() {}
 
@@ -214,25 +214,25 @@ public class Rules {
 		}
 		// </editor-fold>
 
-		// <editor-fold defaultstate="collapsed" desc="base">
+		// <editor-fold defaultstate="collapsed" desc="partialURL">
 		/**
-		 * @see  VirtualHostMatch#getBase()
+		 * @see  VirtualHostMatch#getPartialURL()
 		 */
-		public static class base {
+		public static class partialURL {
 
-			private base() {}
+			private partialURL() {}
 
 			// TODO
 		}
 		// </editor-fold>
 
-		// <editor-fold defaultstate="collapsed" desc="completeBase">
+		// <editor-fold defaultstate="collapsed" desc="url">
 		/**
-		 * @see  VirtualHostMatch#getCompleteBase()
+		 * @see  VirtualHostMatch#getUrl()
 		 */
-		public static class completeBase {
+		public static class url {
 
-			private completeBase() {}
+			private url() {}
 
 			// TODO
 		}

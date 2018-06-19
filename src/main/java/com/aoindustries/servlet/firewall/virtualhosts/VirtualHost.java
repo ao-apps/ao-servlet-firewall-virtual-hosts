@@ -28,18 +28,21 @@ import com.aoindustries.net.HostAddress;
 import com.aoindustries.net.Path;
 import com.aoindustries.net.Port;
 import com.aoindustries.net.Protocol;
+import com.aoindustries.net.partialurl.PartialURL;
+import com.aoindustries.net.partialurl.servlet.HttpServletRequestFieldSource;
 import com.aoindustries.servlet.firewall.api.Rule;
 import com.aoindustries.util.AoCollections;
 import com.aoindustries.validation.ValidationException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * A {@link VirtualHost} is matched from one or more {@link URLBase} and contains a list of per-virtual-host
+ * A {@link VirtualHost} is matched from one or more {@link PartialURL} and contains a list of per-virtual-host
  * {@link Rule rules}.  These rules are called after global rules for requests that
  * match the domains.
  */
@@ -56,11 +59,14 @@ public class VirtualHost {
 	}
 
 	/**
-	 * Generates the default URL base for the given domain as <code>https://${domain}</code>.
+	 * Generates the default partial URL for the given domain as <code>https://${domain}</code>.
+	 * <p>
+	 * TODO: Should this be a {@link URL} to not allow it to be partial?
+	 * </p>
 	 */
-	public static URLBase generateCanonicalBase(DomainName domain) {
-		return URLBase.valueOf(
-			URLBase.HTTPS,
+	public static PartialURL generateCanonicalPartialURL(DomainName domain) {
+		return PartialURL.valueOf(
+			PartialURL.HTTPS,
 			HostAddress.valueOf(domain),
 			HTTPS_PORT,
 			Path.ROOT,
@@ -69,22 +75,22 @@ public class VirtualHost {
 	}
 
 	private final DomainName domain;
-	private final URLBase canonicalBase;
+	private final PartialURL canonicalPartialURL;
 
 	private final List<Rule> rules = new CopyOnWriteArrayList<Rule>();
 
-	VirtualHost(DomainName domain, URLBase canonicalBase) {
+	VirtualHost(DomainName domain, PartialURL canonicalPartialURL) {
 		this.domain = NullArgumentException.checkNotNull(domain, "domain");
-		this.canonicalBase = (canonicalBase == null) ? generateCanonicalBase(domain) : canonicalBase;
+		this.canonicalPartialURL = (canonicalPartialURL == null) ? generateCanonicalPartialURL(domain) : canonicalPartialURL;
 	}
 
 	/**
 	 * Gets the unique domain name of this host.
 	 * A virtual host may have any number of hostnames associated with it via
-	 * {@link URLBase}, but has a single domain name.
+	 * {@link PartialURL}, but has a single domain name.
 	 * <p>
-	 * It is possible for a virtual host to exist without any associated {@link URLBase}.
-	 * In this case, links to it will use the canonical {@link URLBase, if present},
+	 * It is possible for a virtual host to exist without any associated {@link PartialURL}.
+	 * In this case, links to it will use the canonical {@link PartialURL, if present},
 	 * but the host is not matched and served locally.
 	 * </p>
 	 */
@@ -93,15 +99,15 @@ public class VirtualHost {
 	}
 
 	/**
-	 * A virtual host always has a canonical base.  This is used to generate
+	 * A virtual host always has a canonical partial URL.  This is used to generate
 	 * URLs to the virtual host when there is no matching {@link Environment environment}.
 	 * <p>
-	 * This canonical base may have {@code null} fields, which will be taken from
-	 * the current {@link ServletRequest request}.
+	 * This canonical partial URL may have {@code null} fields, which will be taken from
+	 * the current {@link HttpServletRequest request} via {@link HttpServletRequestFieldSource}.
 	 * </p>
 	 */
-	public URLBase getCanonicalBase() {
-		return canonicalBase;
+	public PartialURL getCanonicalPartialURL() {
+		return canonicalPartialURL;
 	}
 
 	/**
