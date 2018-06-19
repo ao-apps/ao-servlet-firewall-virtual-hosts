@@ -1,4 +1,4 @@
-# [<img src="ao-logo.png" alt="AO Logo" width="35" height="40">](https://aoindustries.com/) [AO Servlet Firewall](https://aoindustries.com/ao-servlet-firewall/) / [Virtual Hosts](https://aoindustries.com/ao-servlet-firewall/virtual-hosts/)
+# [<img src="ao-logo.png" alt="AO Logo" width="35" height="40">](https://github.com/aoindustries) [AO Servlet Firewall](https://github.com/aoindustries/ao-servlet-firewall) / [Virtual Hosts](https://github.com/aoindustries/ao-servlet-firewall-virtual-hosts)
 <p>
 	<a href="https://aoindustries.com/life-cycle#project-alpha">
 		<img src="https://aoindustries.com/ao-badges/project-alpha.svg" alt="project: alpha" />
@@ -34,7 +34,7 @@ Virtual host support for servlet-based application request filtering.
 * [GitHub](https://github.com/aoindustries/ao-servlet-firewall-virtual-hosts)
 
 ## Modules
-* [AO Servlet Firewall Virtual Hosts Path Space](https://aoindustries.com/ao-servlet-firewall/virtual-hosts/path-space/)
+* [AO Servlet Firewall Virtual Hosts Path Space](https://github.com/aoindustries/ao-servlet-firewall-virtual-hosts-path-space)
 
 ## Features
 * TODO: Define features
