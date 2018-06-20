@@ -293,13 +293,13 @@ public class VirtualHostManager {
 			try {
 				// Fields obtained from request as-needed
 				for(Map.Entry<PartialURL,ImmutablePair<Environment,DomainName>> entry : searchOrder.entrySet()) {
+					// TODO: Use indexed map lookup
 					PartialURL partialURL = entry.getKey();
 					String scheme = partialURL.getScheme();
 					if(scheme != null && !scheme.equalsIgnoreCase(fieldSource.getScheme())) continue;
 					HostAddress host = partialURL.getHost();
 					if(host != null && !host.equals(fieldSource.getHost())) continue;
 					Port port = partialURL.getPort();
-					// TODO: Need to handle -1 here.  Does it match none, match all?
 					if(port != null && !port.equals(fieldSource.getPort())) continue;
 					Path contextPath = partialURL.getContextPath();
 					if(contextPath != null && !contextPath.equals(fieldSource.getContextPath())) continue;
@@ -310,7 +310,9 @@ public class VirtualHostManager {
 					return new VirtualHostMatch(
 						pair.getLeft(),
 						partialURL,
-						partialURL.toURL(fieldSource),
+						// TODO: A SinglePartialURL that has fields matching a multi, selected from this request?
+						//       This could be useful for maintaining the current values when generating URLs.
+						partialURL.toURL(fieldSource), // toURL should use matching values from request when is a MultiPartialURL
 						virtualHosts.get(domain),
 						new VirtualPath(
 							domain,

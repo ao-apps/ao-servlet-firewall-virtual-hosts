@@ -29,6 +29,7 @@ import com.aoindustries.net.Path;
 import com.aoindustries.net.Port;
 import com.aoindustries.net.Protocol;
 import com.aoindustries.net.partialurl.PartialURL;
+import com.aoindustries.net.partialurl.SinglePartialURL;
 import com.aoindustries.net.partialurl.servlet.HttpServletRequestFieldSource;
 import com.aoindustries.servlet.firewall.api.Rule;
 import com.aoindustries.util.AoCollections;
@@ -64,8 +65,8 @@ public class VirtualHost {
 	 * TODO: Should this be a {@link URL} to not allow it to be partial?
 	 * </p>
 	 */
-	public static PartialURL generateCanonicalPartialURL(DomainName domain) {
-		return PartialURL.valueOf(
+	public static SinglePartialURL generateCanonicalPartialURL(DomainName domain) {
+		return SinglePartialURL.valueOf(
 			PartialURL.HTTPS,
 			HostAddress.valueOf(domain),
 			HTTPS_PORT,
