@@ -30,7 +30,6 @@ import com.aoindustries.net.partialurl.FieldSource;
 import com.aoindustries.net.partialurl.PartialURL;
 import com.aoindustries.net.partialurl.servlet.HttpServletRequestFieldSource;
 import com.aoindustries.servlet.firewall.api.Rule;
-import com.aoindustries.validation.ValidationException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -288,44 +287,40 @@ public class VirtualHostManager {
 	 */
 	public VirtualHostMatch search(HttpServletRequest request) throws IOException, ServletException {
 		FieldSource fieldSource = new HttpServletRequestFieldSource(request);
+		readLock.lock();
 		try {
-			readLock.lock();
-			try {
-				// Fields obtained from request as-needed
-				for(Map.Entry<PartialURL,ImmutablePair<Environment,DomainName>> entry : searchOrder.entrySet()) {
-					// TODO: Use indexed map lookup
-					PartialURL partialURL = entry.getKey();
-					String scheme = partialURL.getScheme();
-					if(scheme != null && !scheme.equalsIgnoreCase(fieldSource.getScheme())) continue;
-					HostAddress host = partialURL.getHost();
-					if(host != null && !host.equals(fieldSource.getHost())) continue;
-					Port port = partialURL.getPort();
-					if(port != null && !port.equals(fieldSource.getPort())) continue;
-					Path contextPath = partialURL.getContextPath();
-					if(contextPath != null && !contextPath.equals(fieldSource.getContextPath())) continue;
-					Path prefix = partialURL.getPrefix();
-					if(prefix != null && !fieldSource.getPath().toString().startsWith(prefix.toString())) continue;
-					ImmutablePair<Environment,DomainName> pair = entry.getValue();
-					DomainName domain = pair.getRight();
-					return new VirtualHostMatch(
-						pair.getLeft(),
-						partialURL,
-						// TODO: A SinglePartialURL that has fields matching a multi, selected from this request?
-						//       This could be useful for maintaining the current values when generating URLs.
-						partialURL.toURL(fieldSource), // toURL should use matching values from request when is a MultiPartialURL
-						virtualHosts.get(domain),
-						new VirtualPath(
-							domain,
-							prefix == null ? fieldSource.getPath() : Path.valueOf(fieldSource.getPath().toString().substring(prefix.toString().length() - 1))
-						)
-					);
-				}
-				return null;
-			} finally {
-				readLock.unlock();
+			// Fields obtained from request as-needed
+			for(Map.Entry<PartialURL,ImmutablePair<Environment,DomainName>> entry : searchOrder.entrySet()) {
+				// TODO: Use indexed map lookup
+				PartialURL partialURL = entry.getKey();
+				String scheme = partialURL.getScheme();
+				if(scheme != null && !scheme.equalsIgnoreCase(fieldSource.getScheme())) continue;
+				HostAddress host = partialURL.getHost();
+				if(host != null && !host.equals(fieldSource.getHost())) continue;
+				Port port = partialURL.getPort();
+				if(port != null && !port.equals(fieldSource.getPort())) continue;
+				Path contextPath = partialURL.getContextPath();
+				if(contextPath != null && !contextPath.equals(fieldSource.getContextPath())) continue;
+				Path prefix = partialURL.getPrefix();
+				if(prefix != null && !fieldSource.getPath().toString().startsWith(prefix.toString())) continue;
+				ImmutablePair<Environment,DomainName> pair = entry.getValue();
+				DomainName domain = pair.getRight();
+				return new VirtualHostMatch(
+					pair.getLeft(),
+					partialURL,
+					// TODO: A SinglePartialURL that has fields matching a multi, selected from this request?
+					//       This could be useful for maintaining the current values when generating URLs.
+					partialURL.toURL(fieldSource), // toURL should use matching values from request when is a MultiPartialURL
+					virtualHosts.get(domain),
+					new VirtualPath(
+						domain,
+						prefix == null ? fieldSource.getPath() : fieldSource.getPath().suffix(prefix.toString().length() - 1)
+					)
+				);
 			}
-		} catch(ValidationException e) {
-			throw new ServletException(e);
+			return null;
+		} finally {
+			readLock.unlock();
 		}
 	}
 	// </editor-fold>
