@@ -37,7 +37,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 		dateModified="2018-06-15T00:18:23-0500"
 	>
 		<core:child page="changelog.jspx" />
-		<core:child page="apidocs/" />
+		<core:child page="apidocs/index.jspx" />
 		<core:child book="/ao-servlet-firewall/virtual-hosts/path-space" page="/index.jspx" />
 		<ao:include
 			page="/ao-badges/badges.inc.jspx"
