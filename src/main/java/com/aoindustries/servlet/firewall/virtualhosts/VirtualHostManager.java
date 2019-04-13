@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018  AO Industries, Inc.
+ * Copyright (C) 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -39,6 +39,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 /**
@@ -289,6 +290,8 @@ public class VirtualHostManager {
 		FieldSource fieldSource = new HttpServletRequestFieldSource(request);
 		readLock.lock();
 		try {
+			throw new NotImplementedException("TODO: Finish implementation");
+			/* TODO: Finish implementation
 			// Fields obtained from request as-needed
 			for(Map.Entry<PartialURL,ImmutablePair<Environment,DomainName>> entry : searchOrder.entrySet()) {
 				// TODO: Use indexed map lookup
@@ -319,6 +322,7 @@ public class VirtualHostManager {
 				);
 			}
 			return null;
+			 */
 		} finally {
 			readLock.unlock();
 		}
