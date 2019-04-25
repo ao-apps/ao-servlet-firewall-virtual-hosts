@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018  AO Industries, Inc.
+ * Copyright (C) 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -78,7 +78,7 @@ public class VirtualHost {
 	private final DomainName domain;
 	private final PartialURL canonicalPartialURL;
 
-	private final List<Rule> rules = new CopyOnWriteArrayList<Rule>();
+	private final List<Rule> rules = new CopyOnWriteArrayList<>();
 
 	VirtualHost(DomainName domain, PartialURL canonicalPartialURL) {
 		this.domain = NullArgumentException.checkNotNull(domain, "domain");

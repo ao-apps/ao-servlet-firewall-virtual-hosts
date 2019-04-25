@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018  AO Industries, Inc.
+ * Copyright (C) 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -40,11 +40,11 @@ public class Environment {
 
 	private final VirtualHostManager manager;
 	private final String name;
-	private final Map<PartialURL,DomainName> byPartialURL = new LinkedHashMap<PartialURL,DomainName>();
+	private final Map<PartialURL,DomainName> byPartialURL = new LinkedHashMap<>();
 	// TODO: Primary is a bit redundant with byVirtualHost, since it just contains the first one added (at this time)
-	private final Map<DomainName,PartialURL> primary = new LinkedHashMap<DomainName,PartialURL>();
+	private final Map<DomainName,PartialURL> primary = new LinkedHashMap<>();
 	// Each value is unmodifiable and is re-created when updated
-	private final Map<DomainName,Set<PartialURL>> byVirtualHost = new LinkedHashMap<DomainName,Set<PartialURL>>();
+	private final Map<DomainName,Set<PartialURL>> byVirtualHost = new LinkedHashMap<>();
 
 	Environment(VirtualHostManager manager, String name) {
 		this.manager = NullArgumentException.checkNotNull(manager, "manager");
@@ -81,7 +81,7 @@ public class Environment {
 		manager.writeLock.lock();
 		try {
 			// Note: Virtual hosts are add-only, so they cannot be removed during this process so no need to lock the manager
-			Map<PartialURL,DomainName> verified = new LinkedHashMap<PartialURL,DomainName>(newMappings.size()*4/3+1);
+			Map<PartialURL,DomainName> verified = new LinkedHashMap<>(newMappings.size()*4/3+1);
 			for(Map.Entry<? extends PartialURL,? extends DomainName> entry : newMappings.entrySet()) {
 				PartialURL partialURL = entry.getKey();
 				if(byPartialURL.containsKey(partialURL)) {
@@ -104,7 +104,7 @@ public class Environment {
 				if(oldPartialURLs == null) {
 					unmodifiablePartialURLs = Collections.singleton(partialURL);
 				} else {
-					Set<PartialURL> newPartialURLs = new LinkedHashSet<PartialURL>((oldPartialURLs.size() + 1)*4/3+1);
+					Set<PartialURL> newPartialURLs = new LinkedHashSet<>((oldPartialURLs.size() + 1)*4/3+1);
 					newPartialURLs.addAll(oldPartialURLs);
 					if(!newPartialURLs.add(partialURL)) throw new AssertionError();
 					unmodifiablePartialURLs = Collections.unmodifiableSet(newPartialURLs);
@@ -132,7 +132,7 @@ public class Environment {
 	 * @throws  IllegalStateException  If the virtual host does not exist or the environment already contains any of the new {@link PartialURL partial URLs}.
 	 */
 	public Environment add(DomainName domain, Iterable<? extends PartialURL> partialURLs) throws IllegalArgumentException, IllegalStateException {
-		Map<PartialURL,DomainName> map = new LinkedHashMap<PartialURL,DomainName>();
+		Map<PartialURL,DomainName> map = new LinkedHashMap<>();
 		for(PartialURL partialURL : partialURLs) {
 			if(map.put(partialURL, domain) != null) throw new IllegalArgumentException("Duplicate partial URL: " + partialURL);
 		}

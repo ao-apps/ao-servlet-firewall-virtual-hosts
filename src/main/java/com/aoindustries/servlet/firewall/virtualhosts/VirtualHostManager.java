@@ -25,7 +25,6 @@ package com.aoindustries.servlet.firewall.virtualhosts;
 import com.aoindustries.net.DomainName;
 import com.aoindustries.net.HostAddress;
 import com.aoindustries.net.Path;
-import com.aoindustries.net.Port;
 import com.aoindustries.net.partialurl.FieldSource;
 import com.aoindustries.net.partialurl.PartialURL;
 import com.aoindustries.net.partialurl.servlet.HttpServletRequestFieldSource;
@@ -145,7 +144,7 @@ public class VirtualHostManager {
 	private VirtualHostManager() {}
 
 	// <editor-fold defaultstate="collapsed" desc="Virtual Hosts">
-	private final Map<DomainName,VirtualHost> virtualHosts = new LinkedHashMap<DomainName,VirtualHost>();
+	private final Map<DomainName,VirtualHost> virtualHosts = new LinkedHashMap<>();
 
 	/**
 	 * Creates a new virtual host.
@@ -226,7 +225,7 @@ public class VirtualHostManager {
 	/**
 	 * Contains all environments, in the order created.
 	 */
-	private final Map<String,Environment> environmentsByName = new LinkedHashMap<String,Environment>();
+	private final Map<String,Environment> environmentsByName = new LinkedHashMap<>();
 
 	/**
 	 * Creates a new, empty environment.
@@ -254,7 +253,7 @@ public class VirtualHostManager {
 	 * the same {@link PartialURL}, but only the first one is kept here.  This is the order requests
 	 * are searched in {@link #search(javax.servlet.http.HttpServletRequest)}.
 	 */
-	private final Map<PartialURL,ImmutablePair<Environment,DomainName>> searchOrder = new LinkedHashMap<PartialURL,ImmutablePair<Environment,DomainName>>();
+	private final Map<PartialURL,ImmutablePair<Environment,DomainName>> searchOrder = new LinkedHashMap<>();
 
 	/**
 	 * Adds a new item to the search order, if the partial URL has not already been used.
