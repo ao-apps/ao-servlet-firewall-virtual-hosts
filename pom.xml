@@ -67,13 +67,15 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 						<configuration>
 							<links>
 								<link>${javac.link.javaApi}</link>
+								<!-- Java EE -->
 								<link>${javac.link.javaeeApi.6}</link>
-								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.9/</link>
+								<!-- Direct -->
 								<link>https://aoindustries.com/ao-lang/apidocs/</link>
 								<link>https://aoindustries.com/ao-net-partial-url/apidocs/</link>
 								<link>https://aoindustries.com/ao-net-partial-url/servlet/apidocs/</link>
 								<link>https://aoindustries.com/ao-servlet-firewall/api/apidocs/</link>
 								<link>https://aoindustries.com/aocode-public/apidocs/</link>
+								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.9/</link>
 							</links>
 						</configuration>
 					</plugin>
@@ -82,28 +84,84 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 		</profile>
 	</profiles>
 
+	<dependencyManagement>
+		<dependencies>
+			<!-- Java EE -->
+			<dependency>
+				<groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId><version>3.0.1</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- Direct -->
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>2.1.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>2.1.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>ao-net-partial-url</artifactId><version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>ao-net-partial-url</artifactId><version>1.0.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>ao-net-partial-url-servlet</artifactId><version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>ao-net-partial-url-servlet</artifactId><version>1.0.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>ao-servlet-firewall-api</artifactId><version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>ao-servlet-firewall-api</artifactId><version>1.0.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>aocode-public</artifactId><version>2.1.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>aocode-public</artifactId><version>2.1.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.9</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
+		<!-- Java EE -->
 		<dependency>
-			<groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId><version>3.0.1</version>
+			<groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!-- Direct -->
 		<dependency>
-			<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.9</version>
+			<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>2.1.0-SNAPSHOT</version>
+			<groupId>com.aoindustries</groupId><artifactId>ao-net-partial-url</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.aoindustries</groupId><artifactId>ao-net-partial-url</artifactId><version>1.0.0-SNAPSHOT</version>
+			<groupId>com.aoindustries</groupId><artifactId>ao-net-partial-url-servlet</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.aoindustries</groupId><artifactId>ao-net-partial-url-servlet</artifactId><version>1.0.0-SNAPSHOT</version>
+			<groupId>com.aoindustries</groupId><artifactId>ao-servlet-firewall-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.aoindustries</groupId><artifactId>ao-servlet-firewall-api</artifactId><version>1.0.0-SNAPSHOT</version>
+			<groupId>com.aoindustries</groupId><artifactId>aocode-public</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.aoindustries</groupId><artifactId>aocode-public</artifactId><version>2.1.0-SNAPSHOT</version>
+			<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId>
 		</dependency>
 	</dependencies>
 </project>
