@@ -106,6 +106,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 			<type>pom</type>
 			<scope>provided</scope>
 			<optional>true</optional>
+			<exclusions><exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion></exclusions>
 		</dependency>
 	</dependencies>
 </project>
