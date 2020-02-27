@@ -121,7 +121,7 @@ public class VirtualHostManager {
 	public static class Initializer implements ServletContextListener {
 		@Override
 		public void contextInitialized(ServletContextEvent event) {
-			getVirtualHostManager(event.getServletContext());
+			getInstance(event.getServletContext());
 		}
 		@Override
 		public void contextDestroyed(ServletContextEvent event) {
@@ -135,7 +135,7 @@ public class VirtualHostManager {
 	 * Gets the {@link VirtualHostManager} for the given {@link ServletContext},
 	 * creating a new instance if not yet present.
 	 */
-	public static VirtualHostManager getVirtualHostManager(ServletContext servletContext) {
+	public static VirtualHostManager getInstance(ServletContext servletContext) {
 		VirtualHostManager instance = (VirtualHostManager)servletContext.getAttribute(APPLICATION_ATTRIBUTE);
 		if(instance == null) {
 			instance = new VirtualHostManager();
