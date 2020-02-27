@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -36,7 +36,10 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -114,25 +117,32 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 public class VirtualHostManager {
 
 	// <editor-fold defaultstate="collapsed" desc="Instance Management">
-	private static final String APPLICATION_ATTRIBUTE_NAME = VirtualHostManager.class.getName();
+	@WebListener
+	public static class Initializer implements ServletContextListener {
+		@Override
+		public void contextInitialized(ServletContextEvent event) {
+			getVirtualHostManager(event.getServletContext());
+		}
+		@Override
+		public void contextDestroyed(ServletContextEvent event) {
+			// Do nothing
+		}
+	}
 
-	private static class InstanceLock extends Object {}
-	private static final InstanceLock instanceLock = new InstanceLock();
+	private static final String APPLICATION_ATTRIBUTE = VirtualHostManager.class.getName();
 
 	/**
 	 * Gets the {@link VirtualHostManager} for the given {@link ServletContext},
 	 * creating a new instance if not yet present.
 	 */
 	public static VirtualHostManager getVirtualHostManager(ServletContext servletContext) {
-		synchronized(instanceLock) {
-			VirtualHostManager instance = (VirtualHostManager)servletContext.getAttribute(APPLICATION_ATTRIBUTE_NAME);
-			if(instance == null) {
-				instance = new VirtualHostManager();
-				servletContext.setAttribute(APPLICATION_ATTRIBUTE_NAME, instance);
-				// TODO: How do we register this with global rules?
-			}
-			return instance;
+		VirtualHostManager instance = (VirtualHostManager)servletContext.getAttribute(APPLICATION_ATTRIBUTE);
+		if(instance == null) {
+			instance = new VirtualHostManager();
+			servletContext.setAttribute(APPLICATION_ATTRIBUTE, instance);
+			// TODO: How do we register this with global rules?
 		}
+		return instance;
 	}
 	// </editor-fold>
 
