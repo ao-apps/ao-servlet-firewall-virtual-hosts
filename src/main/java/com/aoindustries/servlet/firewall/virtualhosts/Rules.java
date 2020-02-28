@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018  AO Industries, Inc.
+ * Copyright (C) 2018, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -42,9 +42,12 @@ import org.apache.commons.lang3.NotImplementedException;
 /**
  * A set of {@link Matcher} and {@link Action} implementations for {@link VirtualHostManager} and {@link VirtualHostMatch}.
  *
- * @implNote  This is admittedly overload-heavy.  We are paying the price here in order to have the absolutely
- *            cleanest possible rule definitions.  Perhaps a future version of Java will introduce optional parameters
- *            and this can be cleaned-up some.
+ * <p>
+ * <b>Implementation Note:</b><br />
+ * This is admittedly overload-heavy.  We are paying the price here in order to have the absolutely
+ * cleanest possible rule definitions.  Perhaps a future version of Java will introduce optional parameters
+ * and this can be cleaned-up some.
+ * </p>
  */
 public class Rules {
 
@@ -730,7 +733,6 @@ public class Rules {
 			 * Matches when the virtual path is equal to a given string, case-insensitive.
 			 *
 			 * @param  rules  Invoked only when matched.
-			 * @param  otherwise  Invoked only when not matched.
 			 *
 			 * @see  String#equalsIgnoreCase(java.lang.String)
 			 */

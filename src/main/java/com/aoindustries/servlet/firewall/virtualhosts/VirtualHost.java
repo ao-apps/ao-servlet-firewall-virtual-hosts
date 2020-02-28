@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -91,7 +91,7 @@ public class VirtualHost {
 	 * {@link PartialURL}, but has a single domain name.
 	 * <p>
 	 * It is possible for a virtual host to exist without any associated {@link PartialURL}.
-	 * In this case, links to it will use the canonical {@link PartialURL, if present},
+	 * In this case, links to it will use the canonical {@link PartialURL}, if present,
 	 * but the host is not matched and served locally.
 	 * </p>
 	 */
@@ -136,8 +136,10 @@ public class VirtualHost {
 
 	/**
 	 * Gets an unmodifiable iterator to the rules.
-	 *
-	 * @implNote  Is unmodifiable due to being implemented as {@link CopyOnWriteArrayList#iterator()}.
+	 * <p>
+	 * <b>Implementation Note:</b><br />
+	 * Is unmodifiable due to being implemented as {@link CopyOnWriteArrayList#iterator()}.
+	 * </p>
 	 */
 	public Iterable<Rule> getRulesIterable() {
 		return rulesIter;
