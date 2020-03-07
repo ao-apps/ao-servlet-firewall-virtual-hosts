@@ -35,8 +35,6 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 	<properties>
 		<!-- These values are copied from the project being documented -->
 		<documented.artifactId>ao-servlet-firewall-virtual-hosts</documented.artifactId>
-		<documented.javaVersion>1.8</documented.javaVersion>
-		<documented.javac.link.javaApi>${javac.link.javaApi.jdk8}</documented.javac.link.javaApi>
 		<documented.name>AO Servlet Firewall Virtual Hosts</documented.name>
 		<documented.shortTitle>Virtual Hosts</documented.shortTitle>
 		<documented.description>Virtual host support for servlet-based application request filtering.</documented.description>
