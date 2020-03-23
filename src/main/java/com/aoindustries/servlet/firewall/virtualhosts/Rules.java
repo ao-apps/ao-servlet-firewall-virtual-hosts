@@ -43,7 +43,7 @@ import org.apache.commons.lang3.NotImplementedException;
  * A set of {@link Matcher} and {@link Action} implementations for {@link VirtualHostManager} and {@link VirtualHostMatch}.
  *
  * <p>
- * <b>Implementation Note:</b><br />
+ * <b>Implementation Note:</b><br>
  * This is admittedly overload-heavy.  We are paying the price here in order to have the absolutely
  * cleanest possible rule definitions.  Perhaps a future version of Java will introduce optional parameters
  * and this can be cleaned-up some.
