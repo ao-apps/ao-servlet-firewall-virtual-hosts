@@ -37,7 +37,6 @@ import com.aoindustries.validation.ValidationException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -127,12 +126,7 @@ public class VirtualHost {
 	 * A small wrapper to prevent casting back to underlying list from the object
 	 * returned from {@link #getRulesIterable()}.
 	 */
-	private final Iterable<Rule> rulesIter = new Iterable<Rule>() {
-		@Override
-		public Iterator<Rule> iterator() {
-			return rules.iterator();
-		}
-	};
+	private final Iterable<Rule> rulesIter = () -> rules.iterator();
 
 	/**
 	 * Gets an unmodifiable iterator to the rules.

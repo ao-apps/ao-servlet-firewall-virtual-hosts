@@ -64,11 +64,8 @@ public class Rules {
 		/**
 		 * TODO
 		 */
-		public static final Matcher doVirtualHost = new Matcher() {
-			@Override
-			public Result perform(FirewallContext context, HttpServletRequest request) throws IOException, ServletException {
-				throw new NotImplementedException("TODO");
-			}
+		public static final Matcher doVirtualHost = (context, request) -> {
+			throw new NotImplementedException("TODO");
 		};
 	}
 	// </editor-fold>
