@@ -22,6 +22,7 @@
  */
 package com.aoindustries.servlet.firewall.virtualhosts;
 
+import com.aoindustries.collections.AoCollections;
 import com.aoindustries.lang.NullArgumentException;
 import com.aoindustries.net.DomainName;
 import com.aoindustries.net.HostAddress;
@@ -32,7 +33,6 @@ import com.aoindustries.net.partialurl.PartialURL;
 import com.aoindustries.net.partialurl.SinglePartialURL;
 import com.aoindustries.net.partialurl.servlet.HttpServletRequestFieldSource;
 import com.aoindustries.servlet.firewall.api.Rule;
-import com.aoindustries.util.AoCollections;
 import com.aoindustries.validation.ValidationException;
 import java.net.URL;
 import java.util.Arrays;
