@@ -42,6 +42,8 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 				<li><a target="_top" href="https://aoindustries.com/ao-servlet-firewall/virtual-hosts/path-space/">AO Servlet Firewall Virtual Hosts Path Space</a></li>
 			</ul>
 		</div>]]></javadoc.modules>
+		<!-- Dependencies -->
+		<org.apache.commons:commons-lang3:version>3.9</org.apache.commons:commons-lang3:version>
 	</properties>
 
 	<name>AO Servlet Firewall Virtual Hosts</name>
@@ -77,7 +79,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 								<link>https://aoindustries.com/ao-net-types/apidocs/</link>
 								<link>https://aoindustries.com/ao-servlet-firewall/api/apidocs/</link>
 								<link>https://aoindustries.com/aocode-public/apidocs/</link>
-								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.9/</link>
+								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-${org.apache.commons:commons-lang3:version}/</link>
 							</links>
 						</configuration>
 					</plugin>
@@ -117,7 +119,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 				<groupId>com.aoindustries</groupId><artifactId>aocode-public</artifactId><version>4.0.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.9</version>
+				<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${org.apache.commons:commons-lang3:version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
