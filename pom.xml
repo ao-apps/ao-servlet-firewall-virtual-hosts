@@ -59,6 +59,11 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 		<tag>HEAD</tag>
 	</scm>
 
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/aoindustries/ao-servlet-firewall-virtual-hosts/issues</url>
+	</issueManagement>
+
 	<profiles>
 		<profile>
 			<id>release</id>
