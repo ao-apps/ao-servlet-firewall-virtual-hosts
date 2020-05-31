@@ -43,7 +43,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 			</ul>
 		</div>]]></javadoc.modules>
 		<!-- Dependencies -->
-		<org.apache.commons.commons-lang3.version>3.10</org.apache.commons.commons-lang3.version>
+		<commons-lang3.version>3.10</commons-lang3.version>
 	</properties>
 
 	<name>AO Servlet Firewall Virtual Hosts</name>
@@ -69,6 +69,61 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 			<build>
 				<plugins>
 					<plugin>
+						<groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>unpack.offlinkLinks</id>
+								<phase>generate-sources</phase>
+								<goals><goal>unpack</goal></goals>
+								<configuration>
+									<artifactItems>
+										<!-- Direct -->
+										<artifactItem>
+											<groupId>com.aoindustries</groupId><artifactId>ao-collections</artifactId>
+											<classifier>javadoc</classifier><includes>element-list, package-list</includes>
+											<outputDirectory>${project.build.directory}/offlineLinks/com.aoindustries/ao-collections</outputDirectory>
+										</artifactItem>
+										<artifactItem>
+											<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId>
+											<classifier>javadoc</classifier><includes>element-list, package-list</includes>
+											<outputDirectory>${project.build.directory}/offlineLinks/com.aoindustries/ao-lang</outputDirectory>
+										</artifactItem>
+										<artifactItem>
+											<groupId>com.aoindustries</groupId><artifactId>ao-net-partial-url</artifactId>
+											<classifier>javadoc</classifier><includes>element-list, package-list</includes>
+											<outputDirectory>${project.build.directory}/offlineLinks/com.aoindustries/ao-net-partial-url</outputDirectory>
+										</artifactItem>
+										<artifactItem>
+											<groupId>com.aoindustries</groupId><artifactId>ao-net-partial-url-servlet</artifactId>
+											<classifier>javadoc</classifier><includes>element-list, package-list</includes>
+											<outputDirectory>${project.build.directory}/offlineLinks/com.aoindustries/ao-net-partial-url-servlet</outputDirectory>
+										</artifactItem>
+										<artifactItem>
+											<groupId>com.aoindustries</groupId><artifactId>ao-net-types</artifactId>
+											<classifier>javadoc</classifier><includes>element-list, package-list</includes>
+											<outputDirectory>${project.build.directory}/offlineLinks/com.aoindustries/ao-net-types</outputDirectory>
+										</artifactItem>
+										<artifactItem>
+											<groupId>com.aoindustries</groupId><artifactId>ao-servlet-firewall-api</artifactId>
+											<classifier>javadoc</classifier><includes>element-list, package-list</includes>
+											<outputDirectory>${project.build.directory}/offlineLinks/com.aoindustries/ao-servlet-firewall-api</outputDirectory>
+										</artifactItem>
+										<artifactItem>
+											<groupId>com.aoindustries</groupId><artifactId>aocode-public</artifactId>
+											<classifier>javadoc</classifier><includes>element-list, package-list</includes>
+											<outputDirectory>${project.build.directory}/offlineLinks/com.aoindustries/aocode-public</outputDirectory>
+										</artifactItem>
+										<artifactItem>
+											<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId>
+											<classifier>javadoc</classifier><includes>element-list, package-list</includes>
+											<outputDirectory>${project.build.directory}/offlineLinks/org.apache.commons/commons-lang3</outputDirectory>
+										</artifactItem>
+									</artifactItems>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
 						<groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId>
 						<configuration>
 							<links>
@@ -76,15 +131,50 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 								<!-- Java EE -->
 								<link>${javadoc.link.javaee}</link>
 								<!-- Direct -->
-								<link>https://aoindustries.com/ao-collections/apidocs/</link>
-								<link>https://aoindustries.com/ao-lang/apidocs/</link>
-								<link>https://aoindustries.com/ao-net-partial-url/apidocs/</link>
-								<link>https://aoindustries.com/ao-net-partial-url/servlet/apidocs/</link>
-								<link>https://aoindustries.com/ao-net-types/apidocs/</link>
-								<link>https://aoindustries.com/ao-servlet-firewall/api/apidocs/</link>
-								<link>https://aoindustries.com/aocode-public/apidocs/</link>
-								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-${org.apache.commons.commons-lang3.version}/</link>
+								<!-- offlineLink: <groupId>com.aoindustries</groupId><artifactId>ao-collections</artifactId> -->
+								<!-- offlineLink: <groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId> -->
+								<!-- offlineLink: <groupId>com.aoindustries</groupId><artifactId>ao-net-partial-url</artifactId> -->
+								<!-- offlineLink: <groupId>com.aoindustries</groupId><artifactId>ao-net-partial-url-servlet</artifactId> -->
+								<!-- offlineLink: <groupId>com.aoindustries</groupId><artifactId>ao-net-types</artifactId> -->
+								<!-- offlineLink: <groupId>com.aoindustries</groupId><artifactId>ao-servlet-firewall-api</artifactId> -->
+								<!-- offlineLink: <groupId>com.aoindustries</groupId><artifactId>aocode-public</artifactId> -->
+								<!-- offlineLink: <groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId> -->
 							</links>
+							<offlineLinks>
+								<!-- Direct -->
+								<offlineLink>
+									<url>https://aoindustries.com/ao-collections/apidocs/</url>
+									<location>${project.build.directory}/offlineLinks/com.aoindustries/ao-collections</location>
+								</offlineLink>
+								<offlineLink>
+									<url>https://aoindustries.com/ao-lang/apidocs/</url>
+									<location>${project.build.directory}/offlineLinks/com.aoindustries/ao-lang</location>
+								</offlineLink>
+								<offlineLink>
+									<url>https://aoindustries.com/ao-net-partial-url/apidocs/</url>
+									<location>${project.build.directory}/offlineLinks/com.aoindustries/ao-net-partial-url</location>
+								</offlineLink>
+								<offlineLink>
+									<url>https://aoindustries.com/ao-net-partial-url/servlet/apidocs/</url>
+									<location>${project.build.directory}/offlineLinks/com.aoindustries/ao-net-partial-url-servlet</location>
+								</offlineLink>
+								<offlineLink>
+									<url>https://aoindustries.com/ao-net-types/apidocs/</url>
+									<location>${project.build.directory}/offlineLinks/com.aoindustries/ao-net-types</location>
+								</offlineLink>
+								<offlineLink>
+									<url>https://aoindustries.com/ao-servlet-firewall/api/apidocs/</url>
+									<location>${project.build.directory}/offlineLinks/com.aoindustries/ao-servlet-firewall-api</location>
+								</offlineLink>
+								<offlineLink>
+									<url>https://aoindustries.com/aocode-public/apidocs/</url>
+									<location>${project.build.directory}/offlineLinks/com.aoindustries/aocode-public</location>
+								</offlineLink>
+								<offlineLink>
+									<url>https://commons.apache.org/proper/commons-lang/javadocs/api-${commons-lang3.version}/</url>
+									<location>${project.build.directory}/offlineLinks/org.apache.commons/commons-lang3</location>
+								</offlineLink>
+							</offlineLinks>
 						</configuration>
 					</plugin>
 				</plugins>
@@ -123,7 +213,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 				<groupId>com.aoindustries</groupId><artifactId>aocode-public</artifactId><version>4.1.0${POST-SNAPSHOT}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${org.apache.commons.commons-lang3.version}</version>
+				<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${commons-lang3.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
