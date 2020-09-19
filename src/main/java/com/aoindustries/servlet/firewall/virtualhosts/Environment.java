@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,13 +22,13 @@
  */
 package com.aoindustries.servlet.firewall.virtualhosts;
 
+import com.aoindustries.collections.AoCollections;
 import com.aoindustries.lang.NullArgumentException;
 import com.aoindustries.net.DomainName;
 import com.aoindustries.net.partialurl.PartialURL;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -81,7 +81,7 @@ public class Environment {
 		manager.writeLock.lock();
 		try {
 			// Note: Virtual hosts are add-only, so they cannot be removed during this process so no need to lock the manager
-			Map<PartialURL,DomainName> verified = new LinkedHashMap<>(newMappings.size()*4/3+1);
+			Map<PartialURL,DomainName> verified = AoCollections.newLinkedHashMap(newMappings.size());
 			for(Map.Entry<? extends PartialURL,? extends DomainName> entry : newMappings.entrySet()) {
 				PartialURL partialURL = entry.getKey();
 				if(byPartialURL.containsKey(partialURL)) {
@@ -104,7 +104,7 @@ public class Environment {
 				if(oldPartialURLs == null) {
 					unmodifiablePartialURLs = Collections.singleton(partialURL);
 				} else {
-					Set<PartialURL> newPartialURLs = new LinkedHashSet<>((oldPartialURLs.size() + 1)*4/3+1);
+					Set<PartialURL> newPartialURLs = AoCollections.newLinkedHashSet(oldPartialURLs.size() + 1);
 					newPartialURLs.addAll(oldPartialURLs);
 					if(!newPartialURLs.add(partialURL)) throw new AssertionError();
 					unmodifiablePartialURLs = Collections.unmodifiableSet(newPartialURLs);
