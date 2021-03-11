@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -154,7 +154,7 @@ public class VirtualHostManager {
 	private VirtualHostManager() {}
 
 	// <editor-fold defaultstate="collapsed" desc="Virtual Hosts">
-	private final Map<DomainName,VirtualHost> virtualHosts = new LinkedHashMap<>();
+	private final Map<DomainName, VirtualHost> virtualHosts = new LinkedHashMap<>();
 
 	/**
 	 * Creates a new virtual host.
@@ -235,7 +235,7 @@ public class VirtualHostManager {
 	/**
 	 * Contains all environments, in the order created.
 	 */
-	private final Map<String,Environment> environmentsByName = new LinkedHashMap<>();
+	private final Map<String, Environment> environmentsByName = new LinkedHashMap<>();
 
 	/**
 	 * Creates a new, empty environment.
@@ -263,7 +263,7 @@ public class VirtualHostManager {
 	 * the same {@link PartialURL}, but only the first one is kept here.  This is the order requests
 	 * are searched in {@link #search(javax.servlet.http.HttpServletRequest)}.
 	 */
-	private final Map<PartialURL,ImmutablePair<Environment,DomainName>> searchOrder = new LinkedHashMap<>();
+	private final Map<PartialURL, ImmutablePair<Environment, DomainName>> searchOrder = new LinkedHashMap<>();
 
 	/**
 	 * Adds a new item to the search order, if the partial URL has not already been used.
@@ -302,7 +302,7 @@ public class VirtualHostManager {
 			throw new NotImplementedException("TODO: Finish implementation");
 			/* TODO: Finish implementation
 			// Fields obtained from request as-needed
-			for(Map.Entry<PartialURL,ImmutablePair<Environment,DomainName>> entry : searchOrder.entrySet()) {
+			for(Map.Entry<PartialURL, ImmutablePair<Environment, DomainName>> entry : searchOrder.entrySet()) {
 				// TODO: Use indexed map lookup
 				PartialURL partialURL = entry.getKey();
 				String scheme = partialURL.getScheme();
@@ -315,7 +315,7 @@ public class VirtualHostManager {
 				if(contextPath != null && !contextPath.equals(fieldSource.getContextPath())) continue;
 				Path prefix = partialURL.getPrefix();
 				if(prefix != null && !fieldSource.getPath().toString().startsWith(prefix.toString())) continue;
-				ImmutablePair<Environment,DomainName> pair = entry.getValue();
+				ImmutablePair<Environment, DomainName> pair = entry.getValue();
 				DomainName domain = pair.getRight();
 				return new VirtualHostMatch(
 					pair.getLeft(),

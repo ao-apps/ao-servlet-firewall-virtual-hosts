@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -40,11 +40,11 @@ public class Environment {
 
 	private final VirtualHostManager manager;
 	private final String name;
-	private final Map<PartialURL,DomainName> byPartialURL = new LinkedHashMap<>();
+	private final Map<PartialURL, DomainName> byPartialURL = new LinkedHashMap<>();
 	// TODO: Primary is a bit redundant with byVirtualHost, since it just contains the first one added (at this time)
-	private final Map<DomainName,PartialURL> primary = new LinkedHashMap<>();
+	private final Map<DomainName, PartialURL> primary = new LinkedHashMap<>();
 	// Each value is unmodifiable and is re-created when updated
-	private final Map<DomainName,Set<PartialURL>> byVirtualHost = new LinkedHashMap<>();
+	private final Map<DomainName, Set<PartialURL>> byVirtualHost = new LinkedHashMap<>();
 
 	Environment(VirtualHostManager manager, String name) {
 		this.manager = NullArgumentException.checkNotNull(manager, "manager");
@@ -77,12 +77,12 @@ public class Environment {
 	 * @throws  IllegalStateException  If the virtual host does not exist or the environment already contains any of the new {@link PartialURL partial URLs}.
 	 */
 	// TODO: Overload with Mapping DomainName -> Iterable<PartialURL>?
-	public Environment add(Map<? extends PartialURL,? extends DomainName> newMappings) {
+	public Environment add(Map<? extends PartialURL, ? extends DomainName> newMappings) {
 		manager.writeLock.lock();
 		try {
 			// Note: Virtual hosts are add-only, so they cannot be removed during this process so no need to lock the manager
-			Map<PartialURL,DomainName> verified = AoCollections.newLinkedHashMap(newMappings.size());
-			for(Map.Entry<? extends PartialURL,? extends DomainName> entry : newMappings.entrySet()) {
+			Map<PartialURL, DomainName> verified = AoCollections.newLinkedHashMap(newMappings.size());
+			for(Map.Entry<? extends PartialURL, ? extends DomainName> entry : newMappings.entrySet()) {
 				PartialURL partialURL = entry.getKey();
 				if(byPartialURL.containsKey(partialURL)) {
 					throw new IllegalStateException("Mapping already exists with partial URL: " + partialURL);
@@ -94,7 +94,7 @@ public class Environment {
 				if(verified.put(partialURL, domain) != null) throw new AssertionError();
 			}
 			// Add now that the input is verified
-			for(Map.Entry<PartialURL,DomainName> entry : verified.entrySet()) {
+			for(Map.Entry<PartialURL, DomainName> entry : verified.entrySet()) {
 				PartialURL partialURL = entry.getKey();
 				DomainName domain = entry.getValue();
 				if(byPartialURL.put(partialURL, domain) != null) throw new AssertionError();
@@ -132,7 +132,7 @@ public class Environment {
 	 * @throws  IllegalStateException  If the virtual host does not exist or the environment already contains any of the new {@link PartialURL partial URLs}.
 	 */
 	public Environment add(DomainName domain, Iterable<? extends PartialURL> partialURLs) throws IllegalArgumentException, IllegalStateException {
-		Map<PartialURL,DomainName> map = new LinkedHashMap<>();
+		Map<PartialURL, DomainName> map = new LinkedHashMap<>();
 		for(PartialURL partialURL : partialURLs) {
 			if(map.put(partialURL, domain) != null) throw new IllegalArgumentException("Duplicate partial URL: " + partialURL);
 		}
