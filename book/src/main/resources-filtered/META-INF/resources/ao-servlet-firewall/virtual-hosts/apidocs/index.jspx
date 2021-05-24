@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
-Copyright (C) 2018, 2019, 2020  AO Industries, Inc.
+Copyright (C) 2018, 2019, 2020, 2021  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -37,7 +37,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 	<core:page
 		title="@{documented.name} ${ao:getProjectVersion('./', 'com.aoindustries', 'ao-servlet-firewall-virtual-hosts', '¿@{project.version}?')} API Docs"
 		shortTitle="API Docs"
-		datePublished="2018-06-14T23:13:12-0500"
+		datePublished="2018-06-14T23:13:12-05:00"
 		dateModified="${ao:getLastModified('index.html')}"
 	/>
 </jsp:root>
