@@ -22,7 +22,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/licenses />.
 -->
 <jsp:root
-	xmlns:ao="https://aoindustries.com/ao-taglib/"
+	xmlns:ao="https://oss.aoapps.com/taglib/"
 	xmlns:core="https://semanticcms.com/core/taglib/"
 	xmlns:jsp="http://java.sun.com/JSP/Page"
 	xmlns:section="https://semanticcms.com/section/taglib/"
@@ -32,14 +32,13 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 	<jsp:directive.page session="false" />
 	<core:page
 		title="@{documented.name}"
-		shortTitle="@{documented.shortTitle}"
 		description="@{documented.description}"
 		datePublished="2018-06-14T23:12:12-05:00"
-		dateModified="2020-03-24T14:01:33-05:00"
+		dateModified="2021-05-31T01:25:50-05:00"
 	>
 		<core:child page="changelog.jspx" />
 		<core:child page="apidocs/index.jspx" />
-		<core:child book="/ao-servlet-firewall/virtual-hosts/path-space" page="/index.jspx" />
+		<core:child book="/servlet-firewall/virtual-hosts/path-space" page="/index.jspx" />
 		<header>
 			<ao:include
 				page="/ao-badges/badges.inc.jspx"
@@ -66,7 +65,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 		</section:nav>
 		<section:section label="Modules">
 			<ul>
-				<li><core:link book="/ao-servlet-firewall/virtual-hosts/path-space" page="/index.jspx" /></li>
+				<li><core:link book="/servlet-firewall/virtual-hosts/path-space" page="/index.jspx" /></li>
 			</ul>
 		</section:section>
 		<section:section label="Features">
