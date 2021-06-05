@@ -20,15 +20,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.servlet.firewall.virtualhosts;
+package com.aoapps.servlet.firewall.virtualhosts;
 
-import com.aoindustries.net.DomainName;
-import com.aoindustries.net.HostAddress;
-import com.aoindustries.net.Path;
-import com.aoindustries.net.partialurl.FieldSource;
-import com.aoindustries.net.partialurl.PartialURL;
-import com.aoindustries.net.partialurl.servlet.HttpServletRequestFieldSource;
-import com.aoindustries.servlet.firewall.api.Rule;
+import com.aoapps.net.DomainName;
+import com.aoapps.net.HostAddress;
+import com.aoapps.net.Path;
+import com.aoapps.net.partialurl.FieldSource;
+import com.aoapps.net.partialurl.PartialURL;
+import com.aoapps.net.partialurl.servlet.HttpServletRequestFieldSource;
+import com.aoapps.servlet.firewall.api.Rule;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -159,7 +159,7 @@ public class VirtualHostManager {
 	/**
 	 * Creates a new virtual host.
 	 *
-	 * @param  canonicalPartialURL  When {@code null}, a canonical partial URL will be generated via {@link VirtualHost#generateCanonicalPartialURL(com.aoindustries.net.DomainName)}.
+	 * @param  canonicalPartialURL  When {@code null}, a canonical partial URL will be generated via {@link VirtualHost#generateCanonicalPartialURL(com.aoapps.net.DomainName)}.
 	 *
 	 * @throws  IllegalStateException  If a virtual host already exists on the {@link VirtualHost#getDomain() host's domain}.
 	 */
@@ -179,7 +179,7 @@ public class VirtualHostManager {
 	/**
 	 * Creates a new virtual host.
 	 *
-	 * @param  canonicalPartialURL  When {@code null}, a canonical partial URL will be generated via {@link VirtualHost#generateCanonicalPartialURL(com.aoindustries.net.DomainName)}.
+	 * @param  canonicalPartialURL  When {@code null}, a canonical partial URL will be generated via {@link VirtualHost#generateCanonicalPartialURL(com.aoapps.net.DomainName)}.
 	 *
 	 * @throws  IllegalStateException  If a virtual host already exists on the {@link VirtualHost#getDomain() host's domain}.
 	 */
@@ -191,7 +191,7 @@ public class VirtualHostManager {
 	 * Creates a new virtual host.
 	 * Generates a default canonical partial URL as <code>https://${domain}</code>.
 	 *
-	 * @see  VirtualHost#generateCanonicalPartialURL(com.aoindustries.net.DomainName)
+	 * @see  VirtualHost#generateCanonicalPartialURL(com.aoapps.net.DomainName)
 	 *
 	 * @throws  IllegalStateException  If a virtual host already exists on the {@link VirtualHost#getDomain() host's domain}.
 	 */
@@ -203,7 +203,7 @@ public class VirtualHostManager {
 	 * Creates a new virtual host.
 	 * Generates a default canonical partial URL as <code>https://${domain}</code>.
 	 *
-	 * @see  VirtualHost#generateCanonicalPartialURL(com.aoindustries.net.DomainName)
+	 * @see  VirtualHost#generateCanonicalPartialURL(com.aoapps.net.DomainName)
 	 *
 	 * @throws  IllegalStateException  If a virtual host already exists on the {@link VirtualHost#getDomain() host's domain}.
 	 */
@@ -216,10 +216,10 @@ public class VirtualHostManager {
 	/**
 	 * Finds the virtual host registered at the given domain.
 	 *
-	 * @see  #newVirtualHost(com.aoindustries.net.DomainName, com.aoindustries.net.partialurl.PartialURL, java.lang.Iterable)
-	 * @see  #newVirtualHost(com.aoindustries.net.DomainName, com.aoindustries.net.partialurl.PartialURL, com.aoindustries.servlet.firewall.api.Rule...)
-	 * @see  #newVirtualHost(com.aoindustries.net.DomainName, java.lang.Iterable)
-	 * @see  #newVirtualHost(com.aoindustries.net.DomainName, com.aoindustries.servlet.firewall.api.Rule...)
+	 * @see  #newVirtualHost(com.aoapps.net.DomainName, com.aoapps.net.partialurl.PartialURL, java.lang.Iterable)
+	 * @see  #newVirtualHost(com.aoapps.net.DomainName, com.aoapps.net.partialurl.PartialURL, com.aoapps.servlet.firewall.api.Rule...)
+	 * @see  #newVirtualHost(com.aoapps.net.DomainName, java.lang.Iterable)
+	 * @see  #newVirtualHost(com.aoapps.net.DomainName, com.aoapps.servlet.firewall.api.Rule...)
 	 */
 	public VirtualHost getVirtualHost(DomainName domain) {
 		readLock.lock();

@@ -20,17 +20,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.servlet.firewall.virtualhosts;
+package com.aoapps.servlet.firewall.virtualhosts;
 
-import com.aoindustries.net.Path;
-import com.aoindustries.servlet.firewall.api.Action;
-import com.aoindustries.servlet.firewall.api.FirewallContext;
-import com.aoindustries.servlet.firewall.api.Matcher;
-import com.aoindustries.servlet.firewall.api.Matcher.Result;
-import static com.aoindustries.servlet.firewall.api.MatcherUtil.doMatches;
-import com.aoindustries.servlet.firewall.api.Rule;
-import com.aoindustries.util.WildcardPatternMatcher;
-import com.aoindustries.validation.ValidationException;
+import com.aoapps.hodgepodge.util.WildcardPatternMatcher;
+import com.aoapps.lang.validation.ValidationException;
+import com.aoapps.net.Path;
+import com.aoapps.servlet.firewall.api.Action;
+import com.aoapps.servlet.firewall.api.FirewallContext;
+import com.aoapps.servlet.firewall.api.Matcher;
+import com.aoapps.servlet.firewall.api.Matcher.Result;
+import static com.aoapps.servlet.firewall.api.MatcherUtil.doMatches;
+import com.aoapps.servlet.firewall.api.Rule;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -118,7 +118,7 @@ public class Rules {
 			}
 
 			/**
-			 * @see  #perform(com.aoindustries.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
+			 * @see  #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
 			 */
 			abstract protected boolean matches(
 				FirewallContext context,
@@ -154,7 +154,7 @@ public class Rules {
 			}
 
 			/**
-			 * @see  #perform(com.aoindustries.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
+			 * @see  #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
 			 */
 			abstract protected boolean matches(
 				FirewallContext context,
@@ -193,7 +193,7 @@ public class Rules {
 			}
 
 			/**
-			 * @see  #perform(com.aoindustries.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
+			 * @see  #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
 			 */
 			abstract protected boolean matches(
 				FirewallContext context,

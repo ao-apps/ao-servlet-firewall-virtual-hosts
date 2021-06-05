@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,20 +20,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.servlet.firewall.virtualhosts;
+package com.aoapps.servlet.firewall.virtualhosts;
 
-import com.aoindustries.collections.AoCollections;
-import com.aoindustries.lang.NullArgumentException;
-import com.aoindustries.net.DomainName;
-import com.aoindustries.net.HostAddress;
-import com.aoindustries.net.Path;
-import com.aoindustries.net.Port;
-import com.aoindustries.net.Protocol;
-import com.aoindustries.net.partialurl.PartialURL;
-import com.aoindustries.net.partialurl.SinglePartialURL;
-import com.aoindustries.net.partialurl.servlet.HttpServletRequestFieldSource;
-import com.aoindustries.servlet.firewall.api.Rule;
-import com.aoindustries.validation.ValidationException;
+import com.aoapps.collections.AoCollections;
+import com.aoapps.lang.NullArgumentException;
+import com.aoapps.lang.validation.ValidationException;
+import com.aoapps.net.DomainName;
+import com.aoapps.net.HostAddress;
+import com.aoapps.net.Path;
+import com.aoapps.net.Port;
+import com.aoapps.net.Protocol;
+import com.aoapps.net.partialurl.PartialURL;
+import com.aoapps.net.partialurl.SinglePartialURL;
+import com.aoapps.net.partialurl.servlet.HttpServletRequestFieldSource;
+import com.aoapps.servlet.firewall.api.Rule;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;

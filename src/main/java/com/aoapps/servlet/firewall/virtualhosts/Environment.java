@@ -20,12 +20,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.servlet.firewall.virtualhosts;
+package com.aoapps.servlet.firewall.virtualhosts;
 
-import com.aoindustries.collections.AoCollections;
-import com.aoindustries.lang.NullArgumentException;
-import com.aoindustries.net.DomainName;
-import com.aoindustries.net.partialurl.PartialURL;
+import com.aoapps.collections.AoCollections;
+import com.aoapps.lang.NullArgumentException;
+import com.aoapps.net.DomainName;
+import com.aoapps.net.partialurl.PartialURL;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -71,8 +71,8 @@ public class Environment {
 	 * Adds new mappings to this environment.
 	 * All {@link VirtualHost virtual hosts} referenced by the environment must already exist.
 	 *
-	 * @see  VirtualHostManager#getVirtualHost(com.aoindustries.net.DomainName)
-	 * @see  VirtualHostManager#addSearchOrder(com.aoindustries.net.partialurl.PartialURL, com.aoindustries.servlet.firewall.virtualhosts.Environment, com.aoindustries.net.DomainName)
+	 * @see  VirtualHostManager#getVirtualHost(com.aoapps.net.DomainName)
+	 * @see  VirtualHostManager#addSearchOrder(com.aoapps.net.partialurl.PartialURL, com.aoapps.servlet.firewall.virtualhosts.Environment, com.aoapps.net.DomainName)
 	 *
 	 * @throws  IllegalStateException  If the virtual host does not exist or the environment already contains any of the new {@link PartialURL partial URLs}.
 	 */
@@ -123,9 +123,9 @@ public class Environment {
 	 *
 	 * @param  domain       The {@link VirtualHost virtual host} must already exist.
 	 * @param  partialURLs  May not be empty.  Duplicate values are not OK.
-	 *                      The first {@link PartialURL partial URL} for a given domain is the {@link #getPrimary(com.aoindustries.net.DomainName) primary}.
+	 *                      The first {@link PartialURL partial URL} for a given domain is the {@link #getPrimary(com.aoapps.net.DomainName) primary}.
 	 *
-	 * @see  VirtualHostManager#getVirtualHost(com.aoindustries.net.DomainName)
+	 * @see  VirtualHostManager#getVirtualHost(com.aoapps.net.DomainName)
 	 *
 	 * @throws  IllegalArgumentException  when {@code partialURLs} contains duplicate values
 	 *
@@ -145,9 +145,9 @@ public class Environment {
 	 *
 	 * @param  domain       The {@link VirtualHost virtual host} must already exist.
 	 * @param  partialURLs  May not be empty.  Duplicate values are not OK.
-	 *                      The first {@link PartialURL partial URL} for a given domain is the {@link #getPrimary(com.aoindustries.net.DomainName) primary}.
+	 *                      The first {@link PartialURL partial URL} for a given domain is the {@link #getPrimary(com.aoapps.net.DomainName) primary}.
 	 *
-	 * @see  VirtualHostManager#getVirtualHost(com.aoindustries.net.DomainName)
+	 * @see  VirtualHostManager#getVirtualHost(com.aoapps.net.DomainName)
 	 *
 	 * @throws  IllegalArgumentException  when {@code partialURLs} contains duplicate values
 	 *
@@ -159,11 +159,11 @@ public class Environment {
 
 	/**
 	 * Gets the primary partial URL for the given virtual host.
-	 * This is the same as the first partial URL from {@link #getPartialURLs(com.aoindustries.net.DomainName)}.
+	 * This is the same as the first partial URL from {@link #getPartialURLs(com.aoapps.net.DomainName)}.
 	 *
 	 * @return  the primary partial URL or {@code null} when the virtual host has not been added to this environment.
 	 *
-	 * @see  #getPartialURLs(com.aoindustries.net.DomainName)
+	 * @see  #getPartialURLs(com.aoapps.net.DomainName)
 	 */
 	public PartialURL getPrimary(DomainName domain) {
 		manager.readLock.lock();
@@ -176,7 +176,7 @@ public class Environment {
 
 	/**
 	 * Gets an unmodifiable copy of all the partial URLs registered for a given virtual host.
-	 * The first partial URL is the {@link #getPrimary(com.aoindustries.net.DomainName) primary}.
+	 * The first partial URL is the {@link #getPrimary(com.aoapps.net.DomainName) primary}.
 	 *
 	 * @return  the set of partial URLs or an empty set when the virtual host has not been added to this environment.
 	 */
