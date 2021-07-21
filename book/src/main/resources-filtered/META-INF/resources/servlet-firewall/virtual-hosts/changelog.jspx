@@ -37,6 +37,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2018-06-14T23:13:41-05:00"
+		dateModified="2021-07-21T09:01:36-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -47,9 +48,9 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <http://www.gnu.org/l
 				repository="@{nexusUrl}content/repositories/snapshots/"
 				scmUrl="@{project.scm.url}"
 			>
-				<ol>
+				<ul>
 					<li>New project for virtual host support for servlet-based application request filtering.</li>
-				</ol>
+				</ul>
 			</changelog:release>
 		</c:if>
 	</core:page>
