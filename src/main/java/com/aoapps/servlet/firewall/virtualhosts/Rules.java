@@ -25,6 +25,7 @@ package com.aoapps.servlet.firewall.virtualhosts;
 import com.aoapps.hodgepodge.util.WildcardPatternMatcher;
 import com.aoapps.lang.validation.ValidationException;
 import com.aoapps.net.Path;
+import com.aoapps.servlet.attribute.ScopeEE;
 import com.aoapps.servlet.firewall.api.Action;
 import com.aoapps.servlet.firewall.api.FirewallContext;
 import com.aoapps.servlet.firewall.api.Matcher;
@@ -86,7 +87,8 @@ public class Rules {
 		/**
 		 * The request key that holds the current {@link VirtualHostMatch}.
 		 */
-		private static final String VIRTUAL_HOST_MATCH_REQUEST_KEY = virtualHostMatch.class.getName();
+		private static final ScopeEE.Request.Attribute<VirtualHostMatch> VIRTUAL_HOST_MATCH_REQUEST_KEY =
+			ScopeEE.REQUEST.attribute(virtualHostMatch.class.getName());
 
 		/**
 		 * Gets the {@link VirtualHostMatch} for the current request.
@@ -95,7 +97,7 @@ public class Rules {
 		 */
 		// TODO: Should this be on FirewallContext only instead of the request?
 		private static VirtualHostMatch getVirtualHostMatch(ServletRequest request) throws ServletException {
-			VirtualHostMatch virtualHostMatch = (VirtualHostMatch)request.getAttribute(VIRTUAL_HOST_MATCH_REQUEST_KEY);
+			VirtualHostMatch virtualHostMatch = VIRTUAL_HOST_MATCH_REQUEST_KEY.context(request).get();
 			if(virtualHostMatch == null) throw new ServletException("VirtualHostMatch not set on request");
 			return virtualHostMatch;
 		}

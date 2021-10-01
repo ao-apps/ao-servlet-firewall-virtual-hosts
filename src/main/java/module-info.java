@@ -30,6 +30,7 @@ module com.aoapps.servlet.firewall.virtualhosts {
 	requires com.aoapps.net.partialurl.servlet; // <groupId>com.aoapps</groupId><artifactId>ao-net-partial-url-servlet</artifactId>
 	requires com.aoapps.net.types; // <groupId>com.aoapps</groupId><artifactId>ao-net-types</artifactId>
 	requires com.aoapps.servlet.firewall.api; // <groupId>com.aoapps</groupId><artifactId>ao-servlet-firewall-api</artifactId>
+	requires com.aoapps.servlet.util; // <groupId>com.aoapps</groupId><artifactId>ao-servlet-util</artifactId>
 	requires org.apache.commons.lang3; // <groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId>
 	requires javax.servlet.api; // <groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId>
 }

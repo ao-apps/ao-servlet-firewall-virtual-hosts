@@ -28,6 +28,7 @@ import com.aoapps.net.Path;
 import com.aoapps.net.partialurl.FieldSource;
 import com.aoapps.net.partialurl.PartialURL;
 import com.aoapps.net.partialurl.servlet.HttpServletRequestFieldSource;
+import com.aoapps.servlet.attribute.ScopeEE;
 import com.aoapps.servlet.firewall.api.Rule;
 import java.io.IOException;
 import java.util.Arrays;
@@ -129,20 +130,19 @@ public class VirtualHostManager {
 		}
 	}
 
-	private static final String APPLICATION_ATTRIBUTE = VirtualHostManager.class.getName();
+	private static final ScopeEE.Application.Attribute<VirtualHostManager> APPLICATION_ATTRIBUTE =
+		ScopeEE.APPLICATION.attribute(VirtualHostManager.class.getName());
 
 	/**
 	 * Gets the {@link VirtualHostManager} for the given {@link ServletContext},
 	 * creating a new instance if not yet present.
 	 */
 	public static VirtualHostManager getInstance(ServletContext servletContext) {
-		VirtualHostManager instance = (VirtualHostManager)servletContext.getAttribute(APPLICATION_ATTRIBUTE);
-		if(instance == null) {
-			instance = new VirtualHostManager();
-			servletContext.setAttribute(APPLICATION_ATTRIBUTE, instance);
+		return APPLICATION_ATTRIBUTE.context(servletContext).computeIfAbsent(__ -> {
+			VirtualHostManager instance = new VirtualHostManager();
 			// TODO: How do we register this with global rules?
-		}
-		return instance;
+			return instance;
+		});
 	}
 	// </editor-fold>
 
