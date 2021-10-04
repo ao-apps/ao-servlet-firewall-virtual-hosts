@@ -104,7 +104,7 @@ public class Rules {
 
 		private abstract static class VirtualHostMatchMatcher implements Matcher {
 			@Override
-			final public Result perform(FirewallContext context, HttpServletRequest request) throws IOException, ServletException {
+			public final Result perform(FirewallContext context, HttpServletRequest request) throws IOException, ServletException {
 				VirtualHostMatch virtualHostMatch = getVirtualHostMatch(request);
 				if(
 					matches(
@@ -122,7 +122,7 @@ public class Rules {
 			/**
 			 * @see  #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
 			 */
-			abstract protected boolean matches(
+			protected abstract boolean matches(
 				FirewallContext context,
 				HttpServletRequest request,
 				VirtualHostMatch virtualHostMatch
@@ -142,7 +142,7 @@ public class Rules {
 			//}
 
 			@Override
-			final public Result perform(FirewallContext context, HttpServletRequest request) throws IOException, ServletException {
+			public final Result perform(FirewallContext context, HttpServletRequest request) throws IOException, ServletException {
 				VirtualHostMatch virtualHostMatch = getVirtualHostMatch(request);
 				return doMatches(
 					matches(
@@ -158,7 +158,7 @@ public class Rules {
 			/**
 			 * @see  #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
 			 */
-			abstract protected boolean matches(
+			protected abstract boolean matches(
 				FirewallContext context,
 				HttpServletRequest request,
 				VirtualHostMatch virtualHostMatch
@@ -180,7 +180,7 @@ public class Rules {
 			//}
 
 			@Override
-			final public Result perform(FirewallContext context, HttpServletRequest request) throws IOException, ServletException {
+			public final Result perform(FirewallContext context, HttpServletRequest request) throws IOException, ServletException {
 				VirtualHostMatch virtualHostMatch = getVirtualHostMatch(request);
 				return doMatches(
 					matches(
@@ -197,7 +197,7 @@ public class Rules {
 			/**
 			 * @see  #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
 			 */
-			abstract protected boolean matches(
+			protected abstract boolean matches(
 				FirewallContext context,
 				HttpServletRequest request,
 				VirtualHostMatch virtualHostMatch
