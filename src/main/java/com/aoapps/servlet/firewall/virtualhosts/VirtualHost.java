@@ -65,7 +65,7 @@ public class VirtualHost {
 	 * </p>
 	 */
 	public static SinglePartialURL generateCanonicalPartialURL(DomainName domain) {
-		return SinglePartialURL.valueOf(
+		return PartialURL.valueOf(
 			PartialURL.HTTPS,
 			HostAddress.valueOf(domain),
 			HTTPS_PORT,
