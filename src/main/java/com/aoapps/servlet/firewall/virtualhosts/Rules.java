@@ -50,17 +50,19 @@ import org.apache.commons.lang3.NotImplementedException;
  * and this can be cleaned-up some.
  * </p>
  */
-public class Rules {
+public abstract class Rules {
 
-	private Rules() {}
+	/** Make no instances. */
+	private Rules() {throw new AssertionError();}
 
 	// <editor-fold defaultstate="collapsed" desc="virtualHostManager">
 	/**
 	 * @see  VirtualHostManager
 	 */
-	public static class virtualHostManager {
+	public abstract static class virtualHostManager {
 
-		private virtualHostManager() {}
+		/** Make no instances. */
+		private virtualHostManager() {throw new AssertionError();}
 
 		/**
 		 * TODO
@@ -75,14 +77,15 @@ public class Rules {
 	/**
 	 * @see  VirtualHostMatch
 	 */
-	public static class virtualHostMatch {
+	public abstract static class virtualHostMatch {
+
+		/** Make no instances. */
+		private virtualHostMatch() {throw new AssertionError();}
 
 		// TODO: Redirect to primary
 		// TODO: Redirect to canonical
 		// TODO: ao-servlet-fireall-virtual-hosts.xml?
 		// TODO: environment selectors, not just partial URLs?  Like by username/hostname/... arbitrary expression?
-
-		private virtualHostMatch() {}
 
 		/**
 		 * The request key that holds the current {@link VirtualHostMatch}.
@@ -208,9 +211,10 @@ public class Rules {
 		/**
 		 * @see  VirtualHostMatch#getEnvironment()
 		 */
-		public static class environment {
+		public abstract static class environment {
 
-			private environment() {}
+			/** Make no instances. */
+			private environment() {throw new AssertionError();}
 
 			// TODO
 		}
@@ -220,9 +224,10 @@ public class Rules {
 		/**
 		 * @see  VirtualHostMatch#getPartialURL()
 		 */
-		public static class partialURL {
+		public abstract static class partialURL {
 
-			private partialURL() {}
+			/** Make no instances. */
+			private partialURL() {throw new AssertionError();}
 
 			// TODO
 		}
@@ -232,9 +237,10 @@ public class Rules {
 		/**
 		 * @see  VirtualHostMatch#getUrl()
 		 */
-		public static class url {
+		public abstract static class url {
 
-			private url() {}
+			/** Make no instances. */
+			private url() {throw new AssertionError();}
 
 			// TODO
 		}
@@ -244,9 +250,10 @@ public class Rules {
 		/**
 		 * @see  VirtualHostMatch#getVirtualHost()
 		 */
-		public static class virtualHost {
+		public abstract static class virtualHost {
 
-			private virtualHost() {}
+			/** Make no instances. */
+			private virtualHost() {throw new AssertionError();}
 
 			// TODO
 		}
@@ -256,9 +263,10 @@ public class Rules {
 		/**
 		 * @see  VirtualHostMatch#getVirtualPath()
 		 */
-		public static class virtualPath {
+		public abstract static class virtualPath {
 
-			private virtualPath() {}
+			/** Make no instances. */
+			private virtualPath() {throw new AssertionError();}
 
 			// TODO: domain?
 

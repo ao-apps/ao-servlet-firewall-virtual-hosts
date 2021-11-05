@@ -115,7 +115,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
  * performed.
  * </p>
  */
-public class VirtualHostManager {
+public final class VirtualHostManager {
 
 	// <editor-fold defaultstate="collapsed" desc="Instance Management">
 	@WebListener
@@ -151,7 +151,9 @@ public class VirtualHostManager {
 	final Lock readLock = rwLock.readLock();
 	final Lock writeLock = rwLock.writeLock();
 
-	private VirtualHostManager() {}
+	private VirtualHostManager() {
+		// Do nothing
+	}
 
 	// <editor-fold defaultstate="collapsed" desc="Virtual Hosts">
 	private final Map<DomainName, VirtualHost> virtualHosts = new LinkedHashMap<>();
