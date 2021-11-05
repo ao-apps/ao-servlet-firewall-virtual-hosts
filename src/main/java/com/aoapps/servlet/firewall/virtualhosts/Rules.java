@@ -29,7 +29,6 @@ import com.aoapps.servlet.attribute.ScopeEE;
 import com.aoapps.servlet.firewall.api.Action;
 import com.aoapps.servlet.firewall.api.FirewallContext;
 import com.aoapps.servlet.firewall.api.Matcher;
-import com.aoapps.servlet.firewall.api.Matcher.Result;
 import static com.aoapps.servlet.firewall.api.MatcherUtil.doMatches;
 import com.aoapps.servlet.firewall.api.Rule;
 import java.io.IOException;
