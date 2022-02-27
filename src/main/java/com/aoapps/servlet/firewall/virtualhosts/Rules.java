@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2018, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -49,7 +49,7 @@ import org.apache.commons.lang3.NotImplementedException;
  * and this can be cleaned-up some.
  * </p>
  */
-public abstract class Rules {
+public final class Rules {
 
 	/** Make no instances. */
 	private Rules() {throw new AssertionError();}
@@ -58,7 +58,7 @@ public abstract class Rules {
 	/**
 	 * @see  VirtualHostManager
 	 */
-	public abstract static class virtualHostManager {
+	public final static class virtualHostManager {
 
 		/** Make no instances. */
 		private virtualHostManager() {throw new AssertionError();}
@@ -76,7 +76,7 @@ public abstract class Rules {
 	/**
 	 * @see  VirtualHostMatch
 	 */
-	public abstract static class virtualHostMatch {
+	public final static class virtualHostMatch {
 
 		/** Make no instances. */
 		private virtualHostMatch() {throw new AssertionError();}
@@ -210,7 +210,7 @@ public abstract class Rules {
 		/**
 		 * @see  VirtualHostMatch#getEnvironment()
 		 */
-		public abstract static class environment {
+		public final static class environment {
 
 			/** Make no instances. */
 			private environment() {throw new AssertionError();}
@@ -223,7 +223,7 @@ public abstract class Rules {
 		/**
 		 * @see  VirtualHostMatch#getPartialURL()
 		 */
-		public abstract static class partialURL {
+		public final static class partialURL {
 
 			/** Make no instances. */
 			private partialURL() {throw new AssertionError();}
@@ -236,7 +236,7 @@ public abstract class Rules {
 		/**
 		 * @see  VirtualHostMatch#getUrl()
 		 */
-		public abstract static class url {
+		public final static class url {
 
 			/** Make no instances. */
 			private url() {throw new AssertionError();}
@@ -249,7 +249,7 @@ public abstract class Rules {
 		/**
 		 * @see  VirtualHostMatch#getVirtualHost()
 		 */
-		public abstract static class virtualHost {
+		public final static class virtualHost {
 
 			/** Make no instances. */
 			private virtualHost() {throw new AssertionError();}
@@ -262,7 +262,7 @@ public abstract class Rules {
 		/**
 		 * @see  VirtualHostMatch#getVirtualPath()
 		 */
-		public abstract static class virtualPath {
+		public final static class virtualPath {
 
 			/** Make no instances. */
 			private virtualPath() {throw new AssertionError();}
