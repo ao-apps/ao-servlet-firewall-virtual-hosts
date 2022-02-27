@@ -58,7 +58,7 @@ public final class Rules {
 	/**
 	 * @see  VirtualHostManager
 	 */
-	public final static class virtualHostManager {
+	public static final class virtualHostManager {
 
 		/** Make no instances. */
 		private virtualHostManager() {throw new AssertionError();}
@@ -76,7 +76,7 @@ public final class Rules {
 	/**
 	 * @see  VirtualHostMatch
 	 */
-	public final static class virtualHostMatch {
+	public static final class virtualHostMatch {
 
 		/** Make no instances. */
 		private virtualHostMatch() {throw new AssertionError();}
@@ -210,7 +210,7 @@ public final class Rules {
 		/**
 		 * @see  VirtualHostMatch#getEnvironment()
 		 */
-		public final static class environment {
+		public static final class environment {
 
 			/** Make no instances. */
 			private environment() {throw new AssertionError();}
@@ -223,7 +223,7 @@ public final class Rules {
 		/**
 		 * @see  VirtualHostMatch#getPartialURL()
 		 */
-		public final static class partialURL {
+		public static final class partialURL {
 
 			/** Make no instances. */
 			private partialURL() {throw new AssertionError();}
@@ -236,7 +236,7 @@ public final class Rules {
 		/**
 		 * @see  VirtualHostMatch#getUrl()
 		 */
-		public final static class url {
+		public static final class url {
 
 			/** Make no instances. */
 			private url() {throw new AssertionError();}
@@ -249,7 +249,7 @@ public final class Rules {
 		/**
 		 * @see  VirtualHostMatch#getVirtualHost()
 		 */
-		public final static class virtualHost {
+		public static final class virtualHost {
 
 			/** Make no instances. */
 			private virtualHost() {throw new AssertionError();}
@@ -262,7 +262,7 @@ public final class Rules {
 		/**
 		 * @see  VirtualHostMatch#getVirtualPath()
 		 */
-		public final static class virtualPath {
+		public static final class virtualPath {
 
 			/** Make no instances. */
 			private virtualPath() {throw new AssertionError();}
