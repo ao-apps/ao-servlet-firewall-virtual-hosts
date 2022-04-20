@@ -33,70 +33,70 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class VirtualHostMatch {
 
-	private final Environment environment;
-	private final PartialURL partialURL;
-	private final URL url;
-	private final VirtualHost virtualHost;
-	private final VirtualPath virtualPath;
+  private final Environment environment;
+  private final PartialURL partialURL;
+  private final URL url;
+  private final VirtualHost virtualHost;
+  private final VirtualPath virtualPath;
 
-	VirtualHostMatch(
-		Environment environment,
-		PartialURL partialURL,
-		URL url,
-		VirtualHost virtualHost,
-		VirtualPath virtualPath
-	) {
-		this.environment = environment;
-		this.partialURL = partialURL;
-		this.url = url;
-		assert virtualHost != null;
-		this.virtualHost = virtualHost;
-		assert virtualPath.getDomain().equals(virtualHost.getDomain());
-		this.virtualPath = virtualPath;
-	}
+  VirtualHostMatch(
+    Environment environment,
+    PartialURL partialURL,
+    URL url,
+    VirtualHost virtualHost,
+    VirtualPath virtualPath
+  ) {
+    this.environment = environment;
+    this.partialURL = partialURL;
+    this.url = url;
+    assert virtualHost != null;
+    this.virtualHost = virtualHost;
+    assert virtualPath.getDomain().equals(virtualHost.getDomain());
+    this.virtualPath = virtualPath;
+  }
 
-	@Override
-	public String toString() {
-		return partialURL + " -> " + url + " -> " + virtualPath;
-	}
+  @Override
+  public String toString() {
+    return partialURL + " -> " + url + " -> " + virtualPath;
+  }
 
-	public Environment getEnvironment() {
-		return environment;
-	}
+  public Environment getEnvironment() {
+    return environment;
+  }
 
-	/**
-	 * Gets the partial URL that matched.  This may contain null fields and is not necessarily
-	 * {@link PartialURL#isComplete() complete}.
-	 */
-	public PartialURL getPartialURL() {
-		return partialURL;
-	}
+  /**
+   * Gets the partial URL that matched.  This may contain null fields and is not necessarily
+   * {@link PartialURL#isComplete() complete}.
+   */
+  public PartialURL getPartialURL() {
+    return partialURL;
+  }
 
-	/**
-	 * Gets the {@link PartialURL#toURL(com.aoapps.net.partialurl.FieldSource) completed URL} that matched, with any
-	 * {@code null} fields provided from the {@link HttpServletRequest request} via {@link HttpServletRequestFieldSource}.
-	 */
-	public URL getUrl() {
-		return url;
-	}
+  /**
+   * Gets the {@link PartialURL#toURL(com.aoapps.net.partialurl.FieldSource) completed URL} that matched, with any
+   * {@code null} fields provided from the {@link HttpServletRequest request} via {@link HttpServletRequestFieldSource}.
+   */
+  public URL getUrl() {
+    return url;
+  }
 
-	/**
-	 * Gets the {@link VirtualHost virtual host} that matched the request.
-	 */
-	public VirtualHost getVirtualHost() {
-		return virtualHost;
-	}
+  /**
+   * Gets the {@link VirtualHost virtual host} that matched the request.
+   */
+  public VirtualHost getVirtualHost() {
+    return virtualHost;
+  }
 
-	/**
-	 * Gets the {@link VirtualPath virtual path} within the virtual host that matched, which
-	 * is the part of the request path (servletPath + pathInfo) past the prefix (and including
-	 * the prefix's trailing slash).
-	 * <p>
-	 * This will always have a {@link VirtualPath#getDomain() domain} matching
-	 * the {@link VirtualHost#getDomain() domain of the virtual host}.
-	 * </p>
-	 */
-	public VirtualPath getVirtualPath() {
-		return virtualPath;
-	}
+  /**
+   * Gets the {@link VirtualPath virtual path} within the virtual host that matched, which
+   * is the part of the request path (servletPath + pathInfo) past the prefix (and including
+   * the prefix's trailing slash).
+   * <p>
+   * This will always have a {@link VirtualPath#getDomain() domain} matching
+   * the {@link VirtualHost#getDomain() domain of the virtual host}.
+   * </p>
+   */
+  public VirtualPath getVirtualPath() {
+    return virtualPath;
+  }
 }

@@ -50,121 +50,121 @@ import javax.servlet.http.HttpServletRequest;
 // TODO: Per-virtual-host attributes?
 public class VirtualHost {
 
-	private static final Port HTTPS_PORT;
-	static {
-		try {
-			HTTPS_PORT = Port.valueOf(443, Protocol.TCP);
-		} catch(ValidationException e) {
-			throw new AssertionError(e);
-		}
-	}
+  private static final Port HTTPS_PORT;
+  static {
+    try {
+      HTTPS_PORT = Port.valueOf(443, Protocol.TCP);
+    } catch (ValidationException e) {
+      throw new AssertionError(e);
+    }
+  }
 
-	/**
-	 * Generates the default partial URL for the given domain as <code>https://${domain}</code>.
-	 * <p>
-	 * TODO: Should this be a {@link URL} to not allow it to be partial?
-	 * </p>
-	 */
-	public static SinglePartialURL generateCanonicalPartialURL(DomainName domain) {
-		return PartialURL.valueOf(
-			PartialURL.HTTPS,
-			HostAddress.valueOf(domain),
-			HTTPS_PORT,
-			Path.ROOT,
-			null
-		);
-	}
+  /**
+   * Generates the default partial URL for the given domain as <code>https://${domain}</code>.
+   * <p>
+   * TODO: Should this be a {@link URL} to not allow it to be partial?
+   * </p>
+   */
+  public static SinglePartialURL generateCanonicalPartialURL(DomainName domain) {
+    return PartialURL.valueOf(
+      PartialURL.HTTPS,
+      HostAddress.valueOf(domain),
+      HTTPS_PORT,
+      Path.ROOT,
+      null
+    );
+  }
 
-	private final DomainName domain;
-	private final PartialURL canonicalPartialURL;
+  private final DomainName domain;
+  private final PartialURL canonicalPartialURL;
 
-	private final List<Rule> rules = new CopyOnWriteArrayList<>();
+  private final List<Rule> rules = new CopyOnWriteArrayList<>();
 
-	VirtualHost(DomainName domain, PartialURL canonicalPartialURL) {
-		this.domain = NullArgumentException.checkNotNull(domain, "domain");
-		this.canonicalPartialURL = (canonicalPartialURL == null) ? generateCanonicalPartialURL(domain) : canonicalPartialURL;
-	}
+  VirtualHost(DomainName domain, PartialURL canonicalPartialURL) {
+    this.domain = NullArgumentException.checkNotNull(domain, "domain");
+    this.canonicalPartialURL = (canonicalPartialURL == null) ? generateCanonicalPartialURL(domain) : canonicalPartialURL;
+  }
 
-	/**
-	 * Gets the unique domain name of this host.
-	 * A virtual host may have any number of hostnames associated with it via
-	 * {@link PartialURL}, but has a single domain name.
-	 * <p>
-	 * It is possible for a virtual host to exist without any associated {@link PartialURL}.
-	 * In this case, links to it will use the canonical {@link PartialURL}, if present,
-	 * but the host is not matched and served locally.
-	 * </p>
-	 */
-	public DomainName getDomain() {
-		return domain;
-	}
+  /**
+   * Gets the unique domain name of this host.
+   * A virtual host may have any number of hostnames associated with it via
+   * {@link PartialURL}, but has a single domain name.
+   * <p>
+   * It is possible for a virtual host to exist without any associated {@link PartialURL}.
+   * In this case, links to it will use the canonical {@link PartialURL}, if present,
+   * but the host is not matched and served locally.
+   * </p>
+   */
+  public DomainName getDomain() {
+    return domain;
+  }
 
-	/**
-	 * A virtual host always has a canonical partial URL.  This is used to generate
-	 * URLs to the virtual host when there is no matching {@link Environment environment}.
-	 * <p>
-	 * This canonical partial URL may have {@code null} fields, which will be taken from
-	 * the current {@link HttpServletRequest request} via {@link HttpServletRequestFieldSource}.
-	 * </p>
-	 */
-	public PartialURL getCanonicalPartialURL() {
-		return canonicalPartialURL;
-	}
+  /**
+   * A virtual host always has a canonical partial URL.  This is used to generate
+   * URLs to the virtual host when there is no matching {@link Environment environment}.
+   * <p>
+   * This canonical partial URL may have {@code null} fields, which will be taken from
+   * the current {@link HttpServletRequest request} via {@link HttpServletRequestFieldSource}.
+   * </p>
+   */
+  public PartialURL getCanonicalPartialURL() {
+    return canonicalPartialURL;
+  }
 
-	/**
-	 * An unmodifiable wrapper around rules for {@link #getRules()}.
-	 */
-	private final List<Rule> unmodifiableRules = Collections.unmodifiableList(rules);
+  /**
+   * An unmodifiable wrapper around rules for {@link #getRules()}.
+   */
+  private final List<Rule> unmodifiableRules = Collections.unmodifiableList(rules);
 
-	/**
-	 * Gets an unmodifiable copy of the rules applied to this virtual host.
-	 */
-	public List<Rule> getRules() {
-		return unmodifiableRules;
-	}
+  /**
+   * Gets an unmodifiable copy of the rules applied to this virtual host.
+   */
+  public List<Rule> getRules() {
+    return unmodifiableRules;
+  }
 
-	/**
-	 * A small wrapper to prevent casting back to underlying list from the object
-	 * returned from {@link #getRulesIterable()}.
-	 */
-	private final Iterable<Rule> rulesIter = rules::iterator;
+  /**
+   * A small wrapper to prevent casting back to underlying list from the object
+   * returned from {@link #getRulesIterable()}.
+   */
+  private final Iterable<Rule> rulesIter = rules::iterator;
 
-	/**
-	 * Gets an unmodifiable iterator to the rules.
-	 * <p>
-	 * <b>Implementation Note:</b><br>
-	 * Is unmodifiable due to being implemented as {@link CopyOnWriteArrayList#iterator()}.
-	 * </p>
-	 */
-	public Iterable<Rule> getRulesIterable() {
-		return rulesIter;
-	}
+  /**
+   * Gets an unmodifiable iterator to the rules.
+   * <p>
+   * <b>Implementation Note:</b><br>
+   * Is unmodifiable due to being implemented as {@link CopyOnWriteArrayList#iterator()}.
+   * </p>
+   */
+  public Iterable<Rule> getRulesIterable() {
+    return rulesIter;
+  }
 
-	/**
-	 * Inserts rules into the beginning of this virtual host.
-	 */
-	public void prepend(Iterable<? extends Rule> rules) {
-		this.rules.addAll(0, AoCollections.asCollection(rules));
-	}
+  /**
+   * Inserts rules into the beginning of this virtual host.
+   */
+  public void prepend(Iterable<? extends Rule> rules) {
+    this.rules.addAll(0, AoCollections.asCollection(rules));
+  }
 
-	/**
-	 * Inserts rules into the beginning of this virtual host.
-	 */
-	public void prepend(Rule ... rules) {
-		prepend(Arrays.asList(rules));
-	}
+  /**
+   * Inserts rules into the beginning of this virtual host.
+   */
+  public void prepend(Rule ... rules) {
+    prepend(Arrays.asList(rules));
+  }
 
-	/**
-	 * Inserts rules into the end of this virtual host.
-	 */
-	public void append(Iterable<? extends Rule> rules) {
-		this.rules.addAll(AoCollections.asCollection(rules));
-	}
+  /**
+   * Inserts rules into the end of this virtual host.
+   */
+  public void append(Iterable<? extends Rule> rules) {
+    this.rules.addAll(AoCollections.asCollection(rules));
+  }
 
-	/**
-	 * Inserts rules into the end of this virtual host.
-	 */
-	public void append(Rule ... rules) {
-		append(Arrays.asList(rules));
-	}
+  /**
+   * Inserts rules into the end of this virtual host.
+   */
+  public void append(Rule ... rules) {
+    append(Arrays.asList(rules));
+  }
 }

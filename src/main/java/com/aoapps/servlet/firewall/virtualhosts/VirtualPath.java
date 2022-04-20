@@ -32,59 +32,63 @@ import com.aoapps.net.Path;
  */
 public class VirtualPath implements Comparable<VirtualPath> {
 
-	private final DomainName domain;
-	private final Path path;
+  private final DomainName domain;
+  private final Path path;
 
-	public VirtualPath(DomainName domain, Path path) {
-		this.domain = domain;
-		this.path = path;
-	}
+  public VirtualPath(DomainName domain, Path path) {
+    this.domain = domain;
+    this.path = path;
+  }
 
-	@Override
-	public String toString() {
-		String domainStr = domain.toString();
-		String pathStr = path.toString();
-		int toStringLen =
-			domainStr.length()
-			+ 1 // ':'
-			+ pathStr.length();
-		String toString = new StringBuilder(toStringLen)
-			.append(domainStr)
-			.append(':')
-			.append(pathStr)
-			.toString();
-		assert toStringLen == toString.length();
-		return toString;
-	}
+  @Override
+  public String toString() {
+    String domainStr = domain.toString();
+    String pathStr = path.toString();
+    int toStringLen =
+      domainStr.length()
+      + 1 // ':'
+      + pathStr.length();
+    String toString = new StringBuilder(toStringLen)
+      .append(domainStr)
+      .append(':')
+      .append(pathStr)
+      .toString();
+    assert toStringLen == toString.length();
+    return toString;
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-		if(!(obj instanceof VirtualPath)) return false;
-		VirtualPath other = (VirtualPath)obj;
-		return
-			domain.equals(other.domain)
-			&& path.equals(other.path);
-	}
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof VirtualPath)) {
+      return false;
+    }
+    VirtualPath other = (VirtualPath)obj;
+    return
+      domain.equals(other.domain)
+      && path.equals(other.path);
+  }
 
-	@Override
-	public int hashCode() {
-		return
-			domain.hashCode() * 31
-			+ path.hashCode();
-	}
+  @Override
+  public int hashCode() {
+    return
+      domain.hashCode() * 31
+      + path.hashCode();
+  }
 
-	@Override
-	public int compareTo(VirtualPath other) {
-		int diff = domain.compareTo(other.domain);
-		if(diff != 0) return diff;
-		return path.compareTo(other.path);
-	}
+  @Override
+  public int compareTo(VirtualPath other) {
+    int diff = domain.compareTo(other.domain);
+    if (diff != 0) {
+      return diff;
+    }
+    return path.compareTo(other.path);
+  }
 
-	public DomainName getDomain() {
-		return domain;
-	}
+  public DomainName getDomain() {
+    return domain;
+  }
 
-	public Path getPath() {
-		return path;
-	}
+  public Path getPath() {
+    return path;
+  }
 }
