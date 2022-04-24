@@ -45,14 +45,14 @@ public class VirtualPath implements Comparable<VirtualPath> {
     String domainStr = domain.toString();
     String pathStr = path.toString();
     int toStringLen =
-      domainStr.length()
-      + 1 // ':'
-      + pathStr.length();
+        domainStr.length()
+            + 1 // ':'
+            + pathStr.length();
     String toString = new StringBuilder(toStringLen)
-      .append(domainStr)
-      .append(':')
-      .append(pathStr)
-      .toString();
+        .append(domainStr)
+        .append(':')
+        .append(pathStr)
+        .toString();
     assert toStringLen == toString.length();
     return toString;
   }
@@ -62,17 +62,17 @@ public class VirtualPath implements Comparable<VirtualPath> {
     if (!(obj instanceof VirtualPath)) {
       return false;
     }
-    VirtualPath other = (VirtualPath)obj;
+    VirtualPath other = (VirtualPath) obj;
     return
-      domain.equals(other.domain)
-      && path.equals(other.path);
+        domain.equals(other.domain)
+            && path.equals(other.path);
   }
 
   @Override
   public int hashCode() {
     return
-      domain.hashCode() * 31
-      + path.hashCode();
+        domain.hashCode() * 31
+            + path.hashCode();
   }
 
   @Override

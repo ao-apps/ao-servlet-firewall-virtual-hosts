@@ -125,6 +125,7 @@ public final class VirtualHostManager {
     public void contextInitialized(ServletContextEvent event) {
       getInstance(event.getServletContext());
     }
+
     @Override
     public void contextDestroyed(ServletContextEvent event) {
       // Do nothing
@@ -132,7 +133,7 @@ public final class VirtualHostManager {
   }
 
   private static final ScopeEE.Application.Attribute<VirtualHostManager> APPLICATION_ATTRIBUTE =
-    ScopeEE.APPLICATION.attribute(VirtualHostManager.class.getName());
+      ScopeEE.APPLICATION.attribute(VirtualHostManager.class.getName());
 
   /**
    * Gets the {@link VirtualHostManager} for the given {@link ServletContext},
@@ -280,12 +281,12 @@ public final class VirtualHostManager {
   void addSearchOrder(PartialURL partialURL, Environment environment, DomainName domain) {
     assert rwLock.isWriteLockedByCurrentThread();
     if (
-      // Keep first occurrence per partial URL
-      !searchOrder.containsKey(partialURL)
-      && searchOrder.put(
-        partialURL,
-        ImmutablePair.of(environment, domain)
-      ) != null
+        // Keep first occurrence per partial URL
+        !searchOrder.containsKey(partialURL)
+            && searchOrder.put(
+            partialURL,
+            ImmutablePair.of(environment, domain)
+        ) != null
     ) {
       throw new AssertionError();
     }

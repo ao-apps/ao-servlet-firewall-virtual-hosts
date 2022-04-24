@@ -51,6 +51,7 @@ import javax.servlet.http.HttpServletRequest;
 public class VirtualHost {
 
   private static final Port HTTPS_PORT;
+
   static {
     try {
       HTTPS_PORT = Port.valueOf(443, Protocol.TCP);
@@ -67,11 +68,11 @@ public class VirtualHost {
    */
   public static SinglePartialURL generateCanonicalPartialURL(DomainName domain) {
     return PartialURL.valueOf(
-      PartialURL.HTTPS,
-      HostAddress.valueOf(domain),
-      HTTPS_PORT,
-      Path.ROOT,
-      null
+        PartialURL.HTTPS,
+        HostAddress.valueOf(domain),
+        HTTPS_PORT,
+        Path.ROOT,
+        null
     );
   }
 

@@ -75,6 +75,7 @@ public final class Rules {
       throw new NotImplementedException("TODO");
     };
   }
+
   // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc="virtualHostMatch">
@@ -97,7 +98,7 @@ public final class Rules {
      * The request key that holds the current {@link VirtualHostMatch}.
      */
     private static final ScopeEE.Request.Attribute<VirtualHostMatch> VIRTUAL_HOST_MATCH_REQUEST_KEY =
-      ScopeEE.REQUEST.attribute(virtualHostMatch.class.getName());
+        ScopeEE.REQUEST.attribute(virtualHostMatch.class.getName());
 
     /**
      * Gets the {@link VirtualHostMatch} for the current request.
@@ -118,11 +119,11 @@ public final class Rules {
       public final Result perform(FirewallContext context, HttpServletRequest request) throws IOException, ServletException {
         VirtualHostMatch virtualHostMatch = getVirtualHostMatch(request);
         if (
-          matches(
-            context,
-            request,
-            virtualHostMatch
-          )
+            matches(
+                context,
+                request,
+                virtualHostMatch
+            )
         ) {
           return Result.MATCH;
         } else {
@@ -134,9 +135,9 @@ public final class Rules {
        * @see  #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
        */
       protected abstract boolean matches(
-        FirewallContext context,
-        HttpServletRequest request,
-        VirtualHostMatch virtualHostMatch
+          FirewallContext context,
+          HttpServletRequest request,
+          VirtualHostMatch virtualHostMatch
       ) throws IOException, ServletException;
     }
 
@@ -156,13 +157,13 @@ public final class Rules {
       public final Result perform(FirewallContext context, HttpServletRequest request) throws IOException, ServletException {
         VirtualHostMatch virtualHostMatch = getVirtualHostMatch(request);
         return doMatches(
-          matches(
+            matches(
+                context,
+                request,
+                virtualHostMatch
+            ),
             context,
-            request,
-            virtualHostMatch
-          ),
-          context,
-          rules
+            rules
         );
       }
 
@@ -170,9 +171,9 @@ public final class Rules {
        * @see  #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
        */
       protected abstract boolean matches(
-        FirewallContext context,
-        HttpServletRequest request,
-        VirtualHostMatch virtualHostMatch
+          FirewallContext context,
+          HttpServletRequest request,
+          VirtualHostMatch virtualHostMatch
       ) throws IOException, ServletException;
     }
 
@@ -194,14 +195,14 @@ public final class Rules {
       public final Result perform(FirewallContext context, HttpServletRequest request) throws IOException, ServletException {
         VirtualHostMatch virtualHostMatch = getVirtualHostMatch(request);
         return doMatches(
-          matches(
+            matches(
+                context,
+                request,
+                virtualHostMatch
+            ),
             context,
-            request,
-            virtualHostMatch
-          ),
-          context,
-          rules,
-          otherwise
+            rules,
+            otherwise
         );
       }
 
@@ -209,9 +210,9 @@ public final class Rules {
        * @see  #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
        */
       protected abstract boolean matches(
-        FirewallContext context,
-        HttpServletRequest request,
-        VirtualHostMatch virtualHostMatch
+          FirewallContext context,
+          HttpServletRequest request,
+          VirtualHostMatch virtualHostMatch
       ) throws IOException, ServletException;
     }
 
@@ -228,6 +229,7 @@ public final class Rules {
 
       // TODO
     }
+
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="partialURL">
@@ -243,6 +245,7 @@ public final class Rules {
 
       // TODO
     }
+
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="url">
@@ -258,6 +261,7 @@ public final class Rules {
 
       // TODO
     }
+
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="virtualHost">
@@ -273,6 +277,7 @@ public final class Rules {
 
       // TODO
     }
+
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="virtualPath">

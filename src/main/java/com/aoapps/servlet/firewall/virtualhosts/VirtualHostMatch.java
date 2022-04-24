@@ -40,11 +40,11 @@ public class VirtualHostMatch {
   private final VirtualPath virtualPath;
 
   VirtualHostMatch(
-    Environment environment,
-    PartialURL partialURL,
-    URL url,
-    VirtualHost virtualHost,
-    VirtualPath virtualPath
+      Environment environment,
+      PartialURL partialURL,
+      URL url,
+      VirtualHost virtualHost,
+      VirtualPath virtualPath
   ) {
     this.environment = environment;
     this.partialURL = partialURL;
