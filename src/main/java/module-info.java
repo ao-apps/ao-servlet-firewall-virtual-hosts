@@ -33,4 +33,4 @@ module com.aoapps.servlet.firewall.virtualhosts {
   requires com.aoapps.servlet.util; // <groupId>com.aoapps</groupId><artifactId>ao-servlet-util</artifactId>
   requires org.apache.commons.lang3; // <groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId>
   requires javax.servlet.api; // <groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId>
-}
+} // TODO: Avoiding rewrite-maven-plugin-4.22.2 truncation
