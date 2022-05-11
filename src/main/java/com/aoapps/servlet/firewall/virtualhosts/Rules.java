@@ -23,6 +23,8 @@
 
 package com.aoapps.servlet.firewall.virtualhosts;
 
+import static com.aoapps.servlet.firewall.api.MatcherUtil.doMatches;
+
 import com.aoapps.hodgepodge.util.WildcardPatternMatcher;
 import com.aoapps.lang.validation.ValidationException;
 import com.aoapps.net.Path;
@@ -30,7 +32,6 @@ import com.aoapps.servlet.attribute.ScopeEE;
 import com.aoapps.servlet.firewall.api.Action;
 import com.aoapps.servlet.firewall.api.FirewallContext;
 import com.aoapps.servlet.firewall.api.Matcher;
-import static com.aoapps.servlet.firewall.api.MatcherUtil.doMatches;
 import com.aoapps.servlet.firewall.api.Rule;
 import java.io.IOException;
 import java.util.Arrays;
@@ -42,7 +43,6 @@ import org.apache.commons.lang3.NotImplementedException;
 
 /**
  * A set of {@link Matcher} and {@link Action} implementations for {@link VirtualHostManager} and {@link VirtualHostMatch}.
- *
  * <p>
  * <b>Implementation Note:</b><br>
  * This is admittedly overload-heavy.  We are paying the price here in order to have the absolutely
@@ -59,7 +59,7 @@ public final class Rules {
 
   // <editor-fold defaultstate="collapsed" desc="virtualHostManager">
   /**
-   * @see  VirtualHostManager
+   * See {@link VirtualHostManager}.
    */
   public static final class virtualHostManager {
 
@@ -69,7 +69,7 @@ public final class Rules {
     }
 
     /**
-     * TODO
+     * TODO.
      */
     public static final Matcher doVirtualHost = (context, request) -> {
       throw new NotImplementedException("TODO");
@@ -80,7 +80,7 @@ public final class Rules {
 
   // <editor-fold defaultstate="collapsed" desc="virtualHostMatch">
   /**
-   * @see  VirtualHostMatch
+   * See {@link VirtualHostMatch}.
    */
   public static final class virtualHostMatch {
 
@@ -132,7 +132,7 @@ public final class Rules {
       }
 
       /**
-       * @see  #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
+       * See {@link #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)}.
        */
       protected abstract boolean matches(
           FirewallContext context,
@@ -168,7 +168,7 @@ public final class Rules {
       }
 
       /**
-       * @see  #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
+       * See {@link #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)}.
        */
       protected abstract boolean matches(
           FirewallContext context,
@@ -207,7 +207,7 @@ public final class Rules {
       }
 
       /**
-       * @see  #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)
+       * See {@link #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)}.
        */
       protected abstract boolean matches(
           FirewallContext context,
@@ -218,7 +218,7 @@ public final class Rules {
 
     // <editor-fold defaultstate="collapsed" desc="environment">
     /**
-     * @see  VirtualHostMatch#getEnvironment()
+     * See {@link VirtualHostMatch#getEnvironment()}.
      */
     public static final class environment {
 
@@ -234,7 +234,7 @@ public final class Rules {
 
     // <editor-fold defaultstate="collapsed" desc="partialURL">
     /**
-     * @see  VirtualHostMatch#getPartialURL()
+     * See {@link VirtualHostMatch#getPartialURL()}.
      */
     public static final class partialURL {
 
@@ -250,7 +250,7 @@ public final class Rules {
 
     // <editor-fold defaultstate="collapsed" desc="url">
     /**
-     * @see  VirtualHostMatch#getUrl()
+     * See {@link VirtualHostMatch#getUrl()}.
      */
     public static final class url {
 
@@ -266,7 +266,7 @@ public final class Rules {
 
     // <editor-fold defaultstate="collapsed" desc="virtualHost">
     /**
-     * @see  VirtualHostMatch#getVirtualHost()
+     * See {@link VirtualHostMatch#getVirtualHost()}.
      */
     public static final class virtualHost {
 
@@ -282,7 +282,7 @@ public final class Rules {
 
     // <editor-fold defaultstate="collapsed" desc="virtualPath">
     /**
-     * @see  VirtualHostMatch#getVirtualPath()
+     * See {@link VirtualHostMatch#getVirtualPath()}.
      */
     public static final class virtualPath {
 

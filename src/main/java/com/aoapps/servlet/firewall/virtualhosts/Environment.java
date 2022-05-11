@@ -41,7 +41,7 @@ public class Environment {
 
   private final VirtualHostManager manager;
   private final String name;
-  private final Map<PartialURL, DomainName> byPartialURL = new LinkedHashMap<>();
+  private final Map<PartialURL, DomainName> byPartialUrl = new LinkedHashMap<>();
   // TODO: Primary is a bit redundant with byVirtualHost, since it just contains the first one added (at this time)
   private final Map<DomainName, PartialURL> primary = new LinkedHashMap<>();
   // Each value is unmodifiable and is re-created when updated
@@ -84,42 +84,42 @@ public class Environment {
       // Note: Virtual hosts are add-only, so they cannot be removed during this process so no need to lock the manager
       Map<PartialURL, DomainName> verified = AoCollections.newLinkedHashMap(newMappings.size());
       for (Map.Entry<? extends PartialURL, ? extends DomainName> entry : newMappings.entrySet()) {
-        PartialURL partialURL = entry.getKey();
-        if (byPartialURL.containsKey(partialURL)) {
-          throw new IllegalStateException("Mapping already exists with partial URL: " + partialURL);
+        PartialURL partialUrl = entry.getKey();
+        if (byPartialUrl.containsKey(partialUrl)) {
+          throw new IllegalStateException("Mapping already exists with partial URL: " + partialUrl);
         }
         DomainName domain = entry.getValue();
         if (manager.getVirtualHost(domain) == null) {
           throw new IllegalStateException("Virtual host does not exist: " + domain);
         }
-        if (verified.put(partialURL, domain) != null) {
+        if (verified.put(partialUrl, domain) != null) {
           throw new AssertionError();
         }
       }
       // Add now that the input is verified
       for (Map.Entry<PartialURL, DomainName> entry : verified.entrySet()) {
-        PartialURL partialURL = entry.getKey();
+        PartialURL partialUrl = entry.getKey();
         DomainName domain = entry.getValue();
-        if (byPartialURL.put(partialURL, domain) != null) {
+        if (byPartialUrl.put(partialUrl, domain) != null) {
           throw new AssertionError();
         }
-        if (!primary.containsKey(domain) && primary.put(domain, partialURL) != null) {
+        if (!primary.containsKey(domain) && primary.put(domain, partialUrl) != null) {
           throw new AssertionError();
         }
-        Set<PartialURL> oldPartialURLs = byVirtualHost.get(domain);
-        Set<PartialURL> unmodifiablePartialURLs;
-        if (oldPartialURLs == null) {
-          unmodifiablePartialURLs = Collections.singleton(partialURL);
+        Set<PartialURL> oldPartialUrls = byVirtualHost.get(domain);
+        Set<PartialURL> unmodifiablePartialUrls;
+        if (oldPartialUrls == null) {
+          unmodifiablePartialUrls = Collections.singleton(partialUrl);
         } else {
-          Set<PartialURL> newPartialURLs = AoCollections.newLinkedHashSet(oldPartialURLs.size() + 1);
-          newPartialURLs.addAll(oldPartialURLs);
-          if (!newPartialURLs.add(partialURL)) {
+          Set<PartialURL> newPartialUrls = AoCollections.newLinkedHashSet(oldPartialUrls.size() + 1);
+          newPartialUrls.addAll(oldPartialUrls);
+          if (!newPartialUrls.add(partialUrl)) {
             throw new AssertionError();
           }
-          unmodifiablePartialURLs = Collections.unmodifiableSet(newPartialURLs);
+          unmodifiablePartialUrls = Collections.unmodifiableSet(newPartialUrls);
         }
-        byVirtualHost.put(domain, unmodifiablePartialURLs);
-        manager.addSearchOrder(partialURL, this, domain);
+        byVirtualHost.put(domain, unmodifiablePartialUrls);
+        manager.addSearchOrder(partialUrl, this, domain);
       }
     } finally {
       manager.writeLock.unlock();
@@ -131,7 +131,7 @@ public class Environment {
    * Adds new mappings to this environment.
    *
    * @param  domain       The {@link VirtualHost virtual host} must already exist.
-   * @param  partialURLs  May not be empty.  Duplicate values are not OK.
+   * @param  partialUrls  May not be empty.  Duplicate values are not OK.
    *                      The first {@link PartialURL partial URL} for a given domain is the {@link #getPrimary(com.aoapps.net.DomainName) primary}.
    *
    * @see  VirtualHostManager#getVirtualHost(com.aoapps.net.DomainName)
@@ -140,11 +140,11 @@ public class Environment {
    *
    * @throws  IllegalStateException  If the virtual host does not exist or the environment already contains any of the new {@link PartialURL partial URLs}.
    */
-  public Environment add(DomainName domain, Iterable<? extends PartialURL> partialURLs) throws IllegalArgumentException, IllegalStateException {
+  public Environment add(DomainName domain, Iterable<? extends PartialURL> partialUrls) throws IllegalArgumentException, IllegalStateException {
     Map<PartialURL, DomainName> map = new LinkedHashMap<>();
-    for (PartialURL partialURL : partialURLs) {
-      if (map.put(partialURL, domain) != null) {
-        throw new IllegalArgumentException("Duplicate partial URL: " + partialURL);
+    for (PartialURL partialUrl : partialUrls) {
+      if (map.put(partialUrl, domain) != null) {
+        throw new IllegalArgumentException("Duplicate partial URL: " + partialUrl);
       }
     }
     if (map.isEmpty()) {
@@ -157,7 +157,7 @@ public class Environment {
    * Adds new mappings to this environment.
    *
    * @param  domain       The {@link VirtualHost virtual host} must already exist.
-   * @param  partialURLs  May not be empty.  Duplicate values are not OK.
+   * @param  partialUrls  May not be empty.  Duplicate values are not OK.
    *                      The first {@link PartialURL partial URL} for a given domain is the {@link #getPrimary(com.aoapps.net.DomainName) primary}.
    *
    * @see  VirtualHostManager#getVirtualHost(com.aoapps.net.DomainName)
@@ -166,8 +166,8 @@ public class Environment {
    *
    * @throws  IllegalStateException  If the virtual host does not exist or the environment already contains any of the new {@link PartialURL partial URLs}.
    */
-  public Environment add(DomainName domain, PartialURL ... partialURLs) throws IllegalArgumentException, IllegalStateException {
-    return add(domain, Arrays.asList(partialURLs));
+  public Environment add(DomainName domain, PartialURL ... partialUrls) throws IllegalArgumentException, IllegalStateException {
+    return add(domain, Arrays.asList(partialUrls));
   }
 
   /**
@@ -194,17 +194,17 @@ public class Environment {
    * @return  the set of partial URLs or an empty set when the virtual host has not been added to this environment.
    */
   public Set<PartialURL> getPartialURLs(DomainName domain) {
-    Set<PartialURL> partialURLs;
+    Set<PartialURL> partialUrls;
     manager.readLock.lock();
     try {
-      partialURLs = byVirtualHost.get(domain);
+      partialUrls = byVirtualHost.get(domain);
     } finally {
       manager.readLock.unlock();
     }
-    if (partialURLs == null) {
+    if (partialUrls == null) {
       return Collections.emptySet();
     } else {
-      return partialURLs;
+      return partialUrls;
     }
   }
 }

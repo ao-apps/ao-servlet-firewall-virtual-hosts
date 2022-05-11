@@ -34,20 +34,20 @@ import javax.servlet.http.HttpServletRequest;
 public class VirtualHostMatch {
 
   private final Environment environment;
-  private final PartialURL partialURL;
+  private final PartialURL partialUrl;
   private final URL url;
   private final VirtualHost virtualHost;
   private final VirtualPath virtualPath;
 
   VirtualHostMatch(
       Environment environment,
-      PartialURL partialURL,
+      PartialURL partialUrl,
       URL url,
       VirtualHost virtualHost,
       VirtualPath virtualPath
   ) {
     this.environment = environment;
-    this.partialURL = partialURL;
+    this.partialUrl = partialUrl;
     this.url = url;
     assert virtualHost != null;
     this.virtualHost = virtualHost;
@@ -57,7 +57,7 @@ public class VirtualHostMatch {
 
   @Override
   public String toString() {
-    return partialURL + " -> " + url + " -> " + virtualPath;
+    return partialUrl + " -> " + url + " -> " + virtualPath;
   }
 
   public Environment getEnvironment() {
@@ -69,7 +69,7 @@ public class VirtualHostMatch {
    * {@link PartialURL#isComplete() complete}.
    */
   public PartialURL getPartialURL() {
-    return partialURL;
+    return partialUrl;
   }
 
   /**

@@ -119,7 +119,10 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 public final class VirtualHostManager {
 
   // <editor-fold defaultstate="collapsed" desc="Instance Management">
-  @WebListener
+  /**
+   * Creates the {@link VirtualHostManager} during {@linkplain ServletContextListener application start-up}.
+   */
+  @WebListener("Creates the VirtualHostManager during application start-up.")
   public static class Initializer implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
@@ -140,7 +143,7 @@ public final class VirtualHostManager {
    * creating a new instance if not yet present.
    */
   public static VirtualHostManager getInstance(ServletContext servletContext) {
-    return APPLICATION_ATTRIBUTE.context(servletContext).computeIfAbsent(__ -> {
+    return APPLICATION_ATTRIBUTE.context(servletContext).computeIfAbsent(name -> {
       VirtualHostManager instance = new VirtualHostManager();
       // TODO: How do we register this with global rules?
       return instance;
@@ -163,17 +166,17 @@ public final class VirtualHostManager {
   /**
    * Creates a new virtual host.
    *
-   * @param  canonicalPartialURL  When {@code null}, a canonical partial URL will be generated via {@link VirtualHost#generateCanonicalPartialURL(com.aoapps.net.DomainName)}.
+   * @param  canonicalPartialUrl  When {@code null}, a canonical partial URL will be generated via {@link VirtualHost#generateCanonicalPartialURL(com.aoapps.net.DomainName)}.
    *
    * @throws  IllegalStateException  If a virtual host already exists on the {@link VirtualHost#getDomain() host's domain}.
    */
-  public VirtualHost newVirtualHost(DomainName domain, PartialURL canonicalPartialURL, Iterable<? extends Rule> rules) throws IllegalStateException {
+  public VirtualHost newVirtualHost(DomainName domain, PartialURL canonicalPartialUrl, Iterable<? extends Rule> rules) throws IllegalStateException {
     writeLock.lock();
     try {
       if (virtualHosts.containsKey(domain)) {
         throw new IllegalStateException("Virtual host with the domain already exists: " + domain);
       }
-      VirtualHost vhost = new VirtualHost(domain, canonicalPartialURL);
+      VirtualHost vhost = new VirtualHost(domain, canonicalPartialUrl);
       vhost.append(rules);
       if (virtualHosts.put(domain, vhost) != null) {
         throw new AssertionError();
@@ -187,12 +190,12 @@ public final class VirtualHostManager {
   /**
    * Creates a new virtual host.
    *
-   * @param  canonicalPartialURL  When {@code null}, a canonical partial URL will be generated via {@link VirtualHost#generateCanonicalPartialURL(com.aoapps.net.DomainName)}.
+   * @param  canonicalPartialUrl  When {@code null}, a canonical partial URL will be generated via {@link VirtualHost#generateCanonicalPartialURL(com.aoapps.net.DomainName)}.
    *
    * @throws  IllegalStateException  If a virtual host already exists on the {@link VirtualHost#getDomain() host's domain}.
    */
-  public VirtualHost newVirtualHost(DomainName domain, PartialURL canonicalPartialURL, Rule ... rules) throws IllegalStateException {
-    return newVirtualHost(domain, canonicalPartialURL, Arrays.asList(rules));
+  public VirtualHost newVirtualHost(DomainName domain, PartialURL canonicalPartialUrl, Rule ... rules) throws IllegalStateException {
+    return newVirtualHost(domain, canonicalPartialUrl, Arrays.asList(rules));
   }
 
   /**
@@ -278,13 +281,13 @@ public final class VirtualHostManager {
    *
    * @see  Environment#add(java.util.Map)
    */
-  void addSearchOrder(PartialURL partialURL, Environment environment, DomainName domain) {
+  void addSearchOrder(PartialURL partialUrl, Environment environment, DomainName domain) {
     assert rwLock.isWriteLockedByCurrentThread();
     if (
         // Keep first occurrence per partial URL
-        !searchOrder.containsKey(partialURL)
+        !searchOrder.containsKey(partialUrl)
             && searchOrder.put(
-            partialURL,
+            partialUrl,
             ImmutablePair.of(environment, domain)
         ) != null
     ) {

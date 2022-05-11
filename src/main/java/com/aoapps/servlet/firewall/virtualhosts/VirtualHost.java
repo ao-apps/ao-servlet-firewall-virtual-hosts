@@ -77,13 +77,13 @@ public class VirtualHost {
   }
 
   private final DomainName domain;
-  private final PartialURL canonicalPartialURL;
+  private final PartialURL canonicalPartialUrl;
 
   private final List<Rule> rules = new CopyOnWriteArrayList<>();
 
-  VirtualHost(DomainName domain, PartialURL canonicalPartialURL) {
+  VirtualHost(DomainName domain, PartialURL canonicalPartialUrl) {
     this.domain = NullArgumentException.checkNotNull(domain, "domain");
-    this.canonicalPartialURL = (canonicalPartialURL == null) ? generateCanonicalPartialURL(domain) : canonicalPartialURL;
+    this.canonicalPartialUrl = (canonicalPartialUrl == null) ? generateCanonicalPartialURL(domain) : canonicalPartialUrl;
   }
 
   /**
@@ -109,7 +109,7 @@ public class VirtualHost {
    * </p>
    */
   public PartialURL getCanonicalPartialURL() {
-    return canonicalPartialURL;
+    return canonicalPartialUrl;
   }
 
   /**
