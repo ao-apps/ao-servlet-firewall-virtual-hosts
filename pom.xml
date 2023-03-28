@@ -44,10 +44,6 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <https://www.gnu.org/
         <li><a target="${javadoc.target}" href="https://oss.aoapps.com/servlet-firewall/virtual-hosts/path-space/">AO Servlet Firewall Virtual Hosts Path Space</a></li>
       </ul>
     </div>]]></javadoc.modules>
-    <!-- SonarQube -->
-    <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
-    <sonar.organization>ao-apps</sonar.organization>
-    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <!-- TODO: Implement tests -->
     <sonar.coverage.exclusions>**.*</sonar.coverage.exclusions>
     <!-- Dependencies -->
