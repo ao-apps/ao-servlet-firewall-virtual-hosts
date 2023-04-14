@@ -23,7 +23,7 @@ Virtual host support for servlet-based application request filtering.
 * [Project Home](https://oss.aoapps.com/servlet-firewall/virtual-hosts/)
 * [Changelog](https://oss.aoapps.com/servlet-firewall/virtual-hosts/changelog)
 * [API Docs](https://oss.aoapps.com/servlet-firewall/virtual-hosts/apidocs/)
-* [Maven Central Repository](https://central.sonatype.com/search?namespace=com.aoapps&q=a%3Aao-servlet-firewall-virtual-hosts)
+* [Maven Central Repository](https://central.sonatype.com/artifact/com.aoapps/ao-servlet-firewall-virtual-hosts)
 * [GitHub](https://github.com/ao-apps/ao-servlet-firewall-virtual-hosts)
 
 ## Modules
