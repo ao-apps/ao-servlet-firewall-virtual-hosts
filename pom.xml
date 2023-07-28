@@ -47,7 +47,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <https://www.gnu.org/
     <!-- TODO: Implement tests -->
     <sonar.coverage.exclusions>**.*</sonar.coverage.exclusions>
     <!-- Dependencies -->
-    <commons-lang3.version>3.12.0</commons-lang3.version>
+    <commons-lang3.version>3.13.0</commons-lang3.version>
   </properties>
 
   <name>AO Servlet Firewall Virtual Hosts</name>
