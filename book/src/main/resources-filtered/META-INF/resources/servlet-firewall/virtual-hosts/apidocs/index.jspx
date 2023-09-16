@@ -39,5 +39,6 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <https://www.gnu.org/
     shortTitle="API Docs"
     datePublished="2018-06-14T23:13:12-05:00"
     dateModified="${ao:getLastModified('index.html')}"
+    allowRobots="false"
   />
 </jsp:root>
