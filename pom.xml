@@ -47,8 +47,6 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <https://www.gnu.org/
     </div>]]></javadoc.modules>
     <!-- TODO: Implement tests -->
     <sonar.coverage.exclusions>**.*</sonar.coverage.exclusions>
-    <!-- Dependencies -->
-    <commons-lang3.version>3.13.0</commons-lang3.version>
   </properties>
 
   <name>AO Servlet Firewall Virtual Hosts</name>
@@ -231,7 +229,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <https://www.gnu.org/
                   <location>${project.build.directory}/offlineLinks/com.aoapps/ao-servlet-util</location>
                 </offlineLink>
                 <offlineLink>
-                  <url>https://javadoc.io/doc/org.apache.commons/commons-lang3/${commons-lang3.version}/</url>
+                  <url>https://javadoc.io/doc/org.apache.commons/commons-lang3/${org.apache.commons:commons-lang3:jar.version}/</url>
                   <location>${project.build.directory}/offlineLinks/org.apache.commons/commons-lang3</location>
                 </offlineLink>
                 <!-- ao-javadoc-offline: <groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId><classifier>javadoc</classifier> -->
@@ -318,7 +316,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <https://www.gnu.org/
         <groupId>com.aoapps</groupId><artifactId>ao-servlet-util</artifactId><version>5.2.1${POST-SNAPSHOT}</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${commons-lang3.version}</version>
+        <groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.13.0</version>
       </dependency>
       <!-- javaee-web-api-bom: <groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId> -->
       <!-- Transitive -->
