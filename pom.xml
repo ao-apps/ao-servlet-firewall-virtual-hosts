@@ -329,6 +329,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <https://www.gnu.org/
       <dependency>
         <groupId>org.apache.commons</groupId><artifactId>commons-collections4</artifactId><version>4.4</version>
       </dependency>
+      <!-- javaee-web-api-bom: <groupId>javax.el</groupId><artifactId>javax.el-api</artifactId> -->
       <!-- javaee-web-api-bom: <groupId>javax.servlet.jsp</groupId><artifactId>javax.servlet.jsp-api</artifactId> -->
       <!-- Imports -->
       <dependency>
