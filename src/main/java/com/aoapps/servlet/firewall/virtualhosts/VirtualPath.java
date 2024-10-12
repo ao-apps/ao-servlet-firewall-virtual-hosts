@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2018, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -35,6 +35,9 @@ public class VirtualPath implements Comparable<VirtualPath> {
   private final DomainName domain;
   private final Path path;
 
+  /**
+   * Creates a new {@link VirtualPath}.
+   */
   public VirtualPath(DomainName domain, Path path) {
     this.domain = domain;
     this.path = path;
