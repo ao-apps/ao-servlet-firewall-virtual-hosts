@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2018, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -43,12 +43,11 @@ import org.apache.commons.lang3.NotImplementedException;
 
 /**
  * A set of {@link Matcher} and {@link Action} implementations for {@link VirtualHostManager} and {@link VirtualHostMatch}.
- * <p>
- * <b>Implementation Note:</b><br>
+ *
+ * <p><b>Implementation Note:</b><br>
  * This is admittedly overload-heavy.  We are paying the price here in order to have the absolutely
  * cleanest possible rule definitions.  Perhaps a future version of Java will introduce optional parameters
- * and this can be cleaned-up some.
- * </p>
+ * and this can be cleaned-up some.</p>
  */
 public final class Rules {
 
@@ -924,13 +923,11 @@ public final class Rules {
 
       /**
        * Matches when the virtual path matches a given {@link WildcardPatternMatcher}.
-       * <p>
-       * {@link WildcardPatternMatcher} can significantly outperform {@link Pattern},
-       * especially in suffix matching.
-       * </p>
-       * <p>
-       * TODO: Move {@link WildcardPatternMatcher} to own microproject and remove dependency on larger ao-hodgepodge project.
-       * </p>
+       *
+       * <p>{@link WildcardPatternMatcher} can significantly outperform {@link Pattern},
+       * especially in suffix matching.</p>
+       *
+       * <p>TODO: Move {@link WildcardPatternMatcher} to own microproject and remove dependency on larger ao-hodgepodge project.</p>
        *
        * @see  WildcardPatternMatcher#compile(java.lang.String)
        */
@@ -945,10 +942,9 @@ public final class Rules {
 
       /**
        * Matches when the virtual path matches a given {@link WildcardPatternMatcher}.
-       * <p>
-       * {@link WildcardPatternMatcher} can significantly outperform {@link Pattern},
-       * especially in suffix matching.
-       * </p>
+       *
+       * <p>{@link WildcardPatternMatcher} can significantly outperform {@link Pattern},
+       * especially in suffix matching.</p>
        *
        * @param  rules  Invoked only when matched.
        *
@@ -965,10 +961,9 @@ public final class Rules {
 
       /**
        * Matches when the virtual path matches a given {@link WildcardPatternMatcher}.
-       * <p>
-       * {@link WildcardPatternMatcher} can significantly outperform {@link Pattern},
-       * especially in suffix matching.
-       * </p>
+       *
+       * <p>{@link WildcardPatternMatcher} can significantly outperform {@link Pattern},
+       * especially in suffix matching.</p>
        *
        * @param  rules  Invoked only when matched.
        * @param  otherwise  Invoked only when not matched.
@@ -986,10 +981,9 @@ public final class Rules {
 
       /**
        * Matches when the virtual path matches a given {@link WildcardPatternMatcher}.
-       * <p>
-       * {@link WildcardPatternMatcher} can significantly outperform {@link Pattern},
-       * especially in suffix matching.
-       * </p>
+       *
+       * <p>{@link WildcardPatternMatcher} can significantly outperform {@link Pattern},
+       * especially in suffix matching.</p>
        *
        * @param  rules  Invoked only when matched.
        *
@@ -1004,10 +998,9 @@ public final class Rules {
 
       /**
        * Matches when the virtual path matches a given {@link WildcardPatternMatcher}.
-       * <p>
-       * {@link WildcardPatternMatcher} can significantly outperform {@link Pattern},
-       * especially in suffix matching.
-       * </p>
+       *
+       * <p>{@link WildcardPatternMatcher} can significantly outperform {@link Pattern},
+       * especially in suffix matching.</p>
        *
        * @param  rules  Invoked only when matched.
        * @param  otherwise  Invoked only when not matched.

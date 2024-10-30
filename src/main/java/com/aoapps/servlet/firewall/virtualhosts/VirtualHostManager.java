@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -49,24 +49,21 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 /**
  * Manages the mapping of incoming requests to {@link VirtualHost virtual host} and
  * the per-virtual-host virtual {@link Path path}.
- * <p>
- * Each virtual host is identified by a canonical {@link DomainName domain}.  However,
+ *
+ * <p>Each virtual host is identified by a canonical {@link DomainName domain}.  However,
  * any number of {@link HostAddress hostnames} may be routed to the virtual host.
  * The hostnames do not necessarily have to include the domain, such as in development
- * modes, but this will often be the case.
- * </p>
- * <p>
- * Multiple "environments" are supported, each of which is a different mapping of
+ * modes, but this will often be the case.</p>
+ *
+ * <p>Multiple "environments" are supported, each of which is a different mapping of
  * requests to virtual hosts.  Links between hosts must consider the environment when
- * choosing how to generate links to other virtual hosts.
- * </p>
- * <p>
- * Environments are matched in the order registered.  This may be significant when there
- * are ambiguities in the mapping.
- * </p>
- * <p>
- * An example of a production environment might be:
- * </p>
+ * choosing how to generate links to other virtual hosts.</p>
+ *
+ * <p>Environments are matched in the order registered.  This may be significant when there
+ * are ambiguities in the mapping.</p>
+ *
+ * <p>An example of a production environment might be:</p>
+ *
  * <ol>
  * <li>aoindustries.com:/ -&gt; domain=aoindustries.com, prefix=/</li>
  * <li>www.aoindustries.com:/ -&gt; domain=aoindustries.com, prefix=/</li>
@@ -77,44 +74,39 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
  * <li>aorepo.org:/ -&gt; domain=aorepo.org, prefix=/</li>
  * <li>www.aorepo.org:/ -&gt; domain=aorepo.org, prefix=/</li>
  * </ol>
- * <p>
- * The corresponding development environment would be:
- * </p>
+ *
+ * <p>The corresponding development environment would be:</p>
+ *
  * <ol>
  * <li>localhost:/aoindustries.com/ -&gt; domain=aoindustries.com, prefix=/</li>
  * <li>localhost:/semanticcms.com/ -&gt; domain=semanticcms.com, prefix=/</li>
  * <li>localhost:/pragmatickm.com/ -&gt; domain=pragmatickm.com, prefix=/</li>
  * <li>localhost:/aorepo.org/ -&gt; domain=aorepo.org, prefix=/</li>
  * </ol>
- * <p>
- * The resulting per-virtual-host paths are in a virtual space introduced by
+ *
+ * <p>The resulting per-virtual-host paths are in a virtual space introduced by
  * this API and not directly part of the standard Servlet API.  How they are
  * handled and mapped onto servlet container resources is up the application and
- * not defined here.
- * </p>
- * <p>
- * It is possible, but not required, to configure a default host.  When a default
+ * not defined here.</p>
+ *
+ * <p>It is possible, but not required, to configure a default host.  When a default
  * host is set, any request not matching the mappings will be assigned to this host.
  * When there is no default host set, non-matching requests are never passed through
- * virtual hosting lists of rules.
- * </p>
- * <p>
- * Among all the hostnames mapped to a virtual host, one may be specified as "canonical".
- * By default, the first non-IP-address hostname is considered the canonical.
- * </p>
- * <p>
- * Per-virtual host, with a global default if unspecified per host, it is possible
+ * virtual hosting lists of rules.</p>
+ *
+ * <p>Among all the hostnames mapped to a virtual host, one may be specified as "canonical".
+ * By default, the first non-IP-address hostname is considered the canonical.</p>
+ *
+ * <p>Per-virtual host, with a global default if unspecified per host, it is possible
  * to canonicalize the host, which means 301 redirect requests to alternate hostnames
  * to the primary.  Requests to IP addresses will not be redirected.  Also, only
  * OPTIONS, GET, and HEAD requests are redirected.  This allows a POST to not lose its
  * content due to a redirect.  When using 303 redirect after POST, this would then get
- * redirected to the canonical hostname.  TODO: 307 redirect for non-OPTIONS/HEAD/GET.
- * </p>
- * <p>
- * Virtual host rules are invoked before non-virtual-host rules.  If the virtual
+ * redirected to the canonical hostname.  TODO: 307 redirect for non-OPTIONS/HEAD/GET.</p>
+ *
+ * <p>Virtual host rules are invoked before non-virtual-host rules.  If the virtual
  * rule rules result in a terminal action, the non-virtual-host rules are never
- * performed.
- * </p>
+ * performed.</p>
  */
 public final class VirtualHostManager {
 
@@ -298,11 +290,10 @@ public final class VirtualHostManager {
   /**
    * Matches the given request to an {@link Environment environment} and
    * {@link VirtualHost virtual host} via {@link HttpServletRequestFieldSource}.
-   * <p>
-   * Search the environments in the order added.
+   *
+   * <p>Search the environments in the order added.
    * Within each environment, searches the {@link PartialURL partial URLs}
-   * in the order added.
-   * </p>
+   * in the order added.</p>
    *
    * @return  The match or {@code null} if no match found.
    *

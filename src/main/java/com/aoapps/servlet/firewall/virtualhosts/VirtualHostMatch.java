@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018, 2021, 2022, 2023  AO Industries, Inc.
+ * Copyright (C) 2018, 2021, 2022, 2023, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -91,10 +91,9 @@ public class VirtualHostMatch {
    * Gets the {@link VirtualPath virtual path} within the virtual host that matched, which
    * is the part of the request path (servletPath + pathInfo) past the prefix (and including
    * the prefix's trailing slash).
-   * <p>
-   * This will always have a {@link VirtualPath#getDomain() domain} matching
-   * the {@link VirtualHost#getDomain() domain of the virtual host}.
-   * </p>
+   *
+   * <p>This will always have a {@link VirtualPath#getDomain() domain} matching
+   * the {@link VirtualHost#getDomain() domain of the virtual host}.</p>
    */
   public VirtualPath getVirtualPath() {
     return virtualPath;
