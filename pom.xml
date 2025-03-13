@@ -29,7 +29,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <https://www.gnu.org/
     <relativePath>../../parent/pom.xml</relativePath>
   </parent>
 
-  <groupId>com.aoapps</groupId><artifactId>ao-servlet-firewall-virtual-hosts</artifactId><version>0.1.1-POST-SNAPSHOT</version>
+  <groupId>com.aoapps</groupId><artifactId>ao-servlet-firewall-virtual-hosts</artifactId><version>0.3.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -301,7 +301,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <https://www.gnu.org/
         <groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>5.7.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
       </dependency>
       <dependency>
-        <groupId>com.aoapps</groupId><artifactId>ao-net-partial-url</artifactId><version>0.1.0${POST-SNAPSHOT}</version>
+        <groupId>com.aoapps</groupId><artifactId>ao-net-partial-url</artifactId><version>0.2.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
       </dependency>
       <dependency>
         <groupId>com.aoapps</groupId><artifactId>ao-net-partial-url-servlet</artifactId><version>0.1.0${POST-SNAPSHOT}</version>
