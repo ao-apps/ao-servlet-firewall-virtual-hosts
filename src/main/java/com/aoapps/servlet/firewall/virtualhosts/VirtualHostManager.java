@@ -186,7 +186,7 @@ public final class VirtualHostManager {
    *
    * @throws  IllegalStateException  If a virtual host already exists on the {@link VirtualHost#getDomain() host's domain}.
    */
-  public VirtualHost newVirtualHost(DomainName domain, PartialURL canonicalPartialUrl, Rule ... rules) throws IllegalStateException {
+  public VirtualHost newVirtualHost(DomainName domain, PartialURL canonicalPartialUrl, Rule... rules) throws IllegalStateException {
     return newVirtualHost(domain, canonicalPartialUrl, Arrays.asList(rules));
   }
 
@@ -210,7 +210,7 @@ public final class VirtualHostManager {
    *
    * @throws  IllegalStateException  If a virtual host already exists on the {@link VirtualHost#getDomain() host's domain}.
    */
-  public VirtualHost newVirtualHost(DomainName domain, Rule ... rules) throws IllegalStateException {
+  public VirtualHost newVirtualHost(DomainName domain, Rule... rules) throws IllegalStateException {
     return newVirtualHost(domain, null, Arrays.asList(rules));
   }
 

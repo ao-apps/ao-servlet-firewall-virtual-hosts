@@ -166,7 +166,7 @@ public class Environment {
    *
    * @throws  IllegalStateException  If the virtual host does not exist or the environment already contains any of the new {@link PartialURL partial URLs}.
    */
-  public Environment add(DomainName domain, PartialURL ... partialUrls) throws IllegalArgumentException, IllegalStateException {
+  public Environment add(DomainName domain, PartialURL... partialUrls) throws IllegalArgumentException, IllegalStateException {
     return add(domain, Arrays.asList(partialUrls));
   }
 

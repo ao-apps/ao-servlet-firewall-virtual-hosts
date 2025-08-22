@@ -147,7 +147,7 @@ public class VirtualHost {
   /**
    * Inserts rules into the beginning of this virtual host.
    */
-  public void prepend(Rule ... rules) {
+  public void prepend(Rule... rules) {
     prepend(Arrays.asList(rules));
   }
 
@@ -161,7 +161,7 @@ public class VirtualHost {
   /**
    * Inserts rules into the end of this virtual host.
    */
-  public void append(Rule ... rules) {
+  public void append(Rule... rules) {
     append(Arrays.asList(rules));
   }
 }
