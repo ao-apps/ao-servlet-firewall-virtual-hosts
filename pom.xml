@@ -91,7 +91,7 @@ along with ao-servlet-firewall-virtual-hosts.  If not, see <https://www.gnu.org/
 
   <ciManagement>
     <system>Jenkins</system>
-    <url>https://jenkins.aoindustries.com/job/ao/job/oss/job/servlet-firewall/job/virtual-hosts/</url>
+    <url>https://jenkins.aoindustries.com/job/ao/job/oss/job/servlet-firewall-javaee/job/virtual-hosts/</url>
   </ciManagement>
   <!-- Only one allowed in POM:
   <ciManagement>

@@ -37,10 +37,10 @@ def upstreamProjects = [
   '../collections', // <groupId>com.aoapps</groupId><artifactId>ao-collections</artifactId>
   '../hodgepodge', // <groupId>com.aoapps</groupId><artifactId>ao-hodgepodge</artifactId>
   '../lang', // <groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId>
-  '../net-partial-url-servlet', // <groupId>com.aoapps</groupId><artifactId>ao-net-partial-url-servlet</artifactId>
+  '../net-partial-url-servlet-javaee', // <groupId>com.aoapps</groupId><artifactId>ao-net-partial-url-servlet</artifactId>
   '../net-types', // <groupId>com.aoapps</groupId><artifactId>ao-net-types</artifactId>
   'api', // <groupId>com.aoapps</groupId><artifactId>ao-servlet-firewall-api</artifactId>
-  '../servlet-util', // <groupId>com.aoapps</groupId><artifactId>ao-servlet-util</artifactId>
+  '../servlet-util-javaee', // <groupId>com.aoapps</groupId><artifactId>ao-servlet-util</artifactId>
   // No Jenkins: <groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId>
   // No Jenkins: <groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId>
 
