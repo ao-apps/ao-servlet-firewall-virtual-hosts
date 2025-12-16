@@ -8,14 +8,14 @@
 [![semantic versioning: 2.0.0](https://oss.aoapps.com/ao-badges/semver-2.0.0.svg)](https://semver.org/spec/v2.0.0.html)
 [![license: LGPL v3](https://oss.aoapps.com/ao-badges/license-lgpl-3.0.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 
-[![Build](https://github.com/ao-apps/ao-servlet-firewall-virtual-hosts/actions/workflows/build.yml/badge.svg?branch=javaee)](https://github.com/ao-apps/ao-servlet-firewall-virtual-hosts/actions?query=workflow%3ABuild)
+[![Build](https://github.com/ao-apps/ao-servlet-firewall-virtual-hosts/actions/workflows/build.yml/badge.svg?branch=jakartaee)](https://github.com/ao-apps/ao-servlet-firewall-virtual-hosts/actions?query=workflow%3ABuild)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aoapps/ao-servlet-firewall-virtual-hosts/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aoapps/ao-servlet-firewall-virtual-hosts)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=javaee&project=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=alert_status)](https://sonarcloud.io/dashboard?branch=javaee&id=com.aoapps%3Aao-servlet-firewall-virtual-hosts)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?branch=javaee&project=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=ncloc)](https://sonarcloud.io/component_measures?branch=javaee&id=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=ncloc)  
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?branch=javaee&project=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=reliability_rating)](https://sonarcloud.io/component_measures?branch=javaee&id=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=Reliability)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?branch=javaee&project=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=security_rating)](https://sonarcloud.io/component_measures?branch=javaee&id=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=Security)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?branch=javaee&project=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=sqale_rating)](https://sonarcloud.io/component_measures?branch=javaee&id=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=Maintainability)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?branch=javaee&project=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=coverage)](https://sonarcloud.io/component_measures?branch=javaee&id=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=Coverage)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=jakartaee&project=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=alert_status)](https://sonarcloud.io/dashboard?branch=jakartaee&id=com.aoapps%3Aao-servlet-firewall-virtual-hosts)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?branch=jakartaee&project=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=ncloc)](https://sonarcloud.io/component_measures?branch=jakartaee&id=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=ncloc)  
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?branch=jakartaee&project=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=reliability_rating)](https://sonarcloud.io/component_measures?branch=jakartaee&id=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=Reliability)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?branch=jakartaee&project=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=security_rating)](https://sonarcloud.io/component_measures?branch=jakartaee&id=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=Security)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?branch=jakartaee&project=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=sqale_rating)](https://sonarcloud.io/component_measures?branch=jakartaee&id=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=Maintainability)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?branch=jakartaee&project=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=coverage)](https://sonarcloud.io/component_measures?branch=jakartaee&id=com.aoapps%3Aao-servlet-firewall-virtual-hosts&metric=Coverage)
 
 Virtual host support for servlet-based application request filtering.
 
