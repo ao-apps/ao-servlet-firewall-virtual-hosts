@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021, 2022, 2024, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -35,12 +35,12 @@ import com.aoapps.net.partialurl.PartialURL;
 import com.aoapps.net.partialurl.SinglePartialURL;
 import com.aoapps.net.partialurl.servlet.HttpServletRequestFieldSource;
 import com.aoapps.servlet.firewall.api.Rule;
+import jakarta.servlet.http.HttpServletRequest;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * A {@link VirtualHost} is matched from one or more {@link PartialURL} and contains a list of per-virtual-host

@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2018, 2019, 2020, 2021, 2022, 2024, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -31,18 +31,18 @@ import com.aoapps.net.partialurl.PartialURL;
 import com.aoapps.net.partialurl.servlet.HttpServletRequestFieldSource;
 import com.aoapps.servlet.attribute.ScopeEE;
 import com.aoapps.servlet.firewall.api.Rule;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebListener;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebListener;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
@@ -264,7 +264,7 @@ public final class VirtualHostManager {
   /**
    * Contains the first environment added for each unique partial URL.  It is possible for multiple environments to have
    * the same {@link PartialURL}, but only the first one is kept here.  This is the order requests
-   * are searched in {@link #search(javax.servlet.http.HttpServletRequest)}.
+   * are searched in {@link #search(jakarta.servlet.http.HttpServletRequest)}.
    */
   private final Map<PartialURL, ImmutablePair<Environment, DomainName>> searchOrder = new LinkedHashMap<>();
 

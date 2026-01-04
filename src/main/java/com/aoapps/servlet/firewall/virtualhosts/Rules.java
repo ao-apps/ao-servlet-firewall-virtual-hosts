@@ -1,6 +1,6 @@
 /*
  * ao-servlet-firewall-virtual-hosts - Virtual host support for servlet-based application request filtering.
- * Copyright (C) 2018, 2020, 2021, 2022, 2024, 2025  AO Industries, Inc.
+ * Copyright (C) 2018, 2020, 2021, 2022, 2024, 2025, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -33,12 +33,12 @@ import com.aoapps.servlet.firewall.api.Action;
 import com.aoapps.servlet.firewall.api.FirewallContext;
 import com.aoapps.servlet.firewall.api.Matcher;
 import com.aoapps.servlet.firewall.api.Rule;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.regex.Pattern;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.NotImplementedException;
 
 /**
@@ -131,7 +131,7 @@ public final class Rules {
       }
 
       /**
-       * See {@link #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)}.
+       * See {@link #perform(com.aoapps.servlet.firewall.api.FirewallContext, jakarta.servlet.http.HttpServletRequest)}.
        */
       protected abstract boolean matches(
           FirewallContext context,
@@ -167,7 +167,7 @@ public final class Rules {
       }
 
       /**
-       * See {@link #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)}.
+       * See {@link #perform(com.aoapps.servlet.firewall.api.FirewallContext, jakarta.servlet.http.HttpServletRequest)}.
        */
       protected abstract boolean matches(
           FirewallContext context,
@@ -206,7 +206,7 @@ public final class Rules {
       }
 
       /**
-       * See {@link #perform(com.aoapps.servlet.firewall.api.FirewallContext, javax.servlet.http.HttpServletRequest)}.
+       * See {@link #perform(com.aoapps.servlet.firewall.api.FirewallContext, jakarta.servlet.http.HttpServletRequest)}.
        */
       protected abstract boolean matches(
           FirewallContext context,
