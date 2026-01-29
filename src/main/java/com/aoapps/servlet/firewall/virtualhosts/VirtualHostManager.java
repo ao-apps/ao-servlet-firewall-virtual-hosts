@@ -219,10 +219,10 @@ public final class VirtualHostManager {
   /**
    * Finds the virtual host registered at the given domain.
    *
-   * @see  #newVirtualHost(com.aoapps.net.DomainName, com.aoapps.net.partialurl.PartialURL, java.lang.Iterable)
-   * @see  #newVirtualHost(com.aoapps.net.DomainName, com.aoapps.net.partialurl.PartialURL, com.aoapps.servlet.firewall.api.Rule...)
-   * @see  #newVirtualHost(com.aoapps.net.DomainName, java.lang.Iterable)
-   * @see  #newVirtualHost(com.aoapps.net.DomainName, com.aoapps.servlet.firewall.api.Rule...)
+   * @see  VirtualHostManager#newVirtualHost(com.aoapps.net.DomainName, com.aoapps.net.partialurl.PartialURL, java.lang.Iterable)
+   * @see  VirtualHostManager#newVirtualHost(com.aoapps.net.DomainName, com.aoapps.net.partialurl.PartialURL, com.aoapps.servlet.firewall.api.Rule...)
+   * @see  VirtualHostManager#newVirtualHost(com.aoapps.net.DomainName, java.lang.Iterable)
+   * @see  VirtualHostManager#newVirtualHost(com.aoapps.net.DomainName, com.aoapps.servlet.firewall.api.Rule...)
    */
   public VirtualHost getVirtualHost(DomainName domain) {
     readLock.lock();
@@ -264,7 +264,7 @@ public final class VirtualHostManager {
   /**
    * Contains the first environment added for each unique partial URL.  It is possible for multiple environments to have
    * the same {@link PartialURL}, but only the first one is kept here.  This is the order requests
-   * are searched in {@link #search(jakarta.servlet.http.HttpServletRequest)}.
+   * are searched in {@link VirtualHostManager#search(jakarta.servlet.http.HttpServletRequest)}.
    */
   private final Map<PartialURL, ImmutablePair<Environment, DomainName>> searchOrder = new LinkedHashMap<>();
 

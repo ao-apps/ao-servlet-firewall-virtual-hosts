@@ -131,7 +131,7 @@ public final class Rules {
       }
 
       /**
-       * See {@link #perform(com.aoapps.servlet.firewall.api.FirewallContext, jakarta.servlet.http.HttpServletRequest)}.
+       * See {@link VirtualHostMatchMatcher#perform(com.aoapps.servlet.firewall.api.FirewallContext, jakarta.servlet.http.HttpServletRequest)}.
        */
       protected abstract boolean matches(
           FirewallContext context,
@@ -167,7 +167,7 @@ public final class Rules {
       }
 
       /**
-       * See {@link #perform(com.aoapps.servlet.firewall.api.FirewallContext, jakarta.servlet.http.HttpServletRequest)}.
+       * See {@link VirtualHostMatchMatcherWithRules#perform(com.aoapps.servlet.firewall.api.FirewallContext, jakarta.servlet.http.HttpServletRequest)}.
        */
       protected abstract boolean matches(
           FirewallContext context,
@@ -206,7 +206,7 @@ public final class Rules {
       }
 
       /**
-       * See {@link #perform(com.aoapps.servlet.firewall.api.FirewallContext, jakarta.servlet.http.HttpServletRequest)}.
+       * See {@link VirtualHostMatchMatcherWithRulesAndOtherwise#perform(com.aoapps.servlet.firewall.api.FirewallContext, jakarta.servlet.http.HttpServletRequest)}.
        */
       protected abstract boolean matches(
           FirewallContext context,

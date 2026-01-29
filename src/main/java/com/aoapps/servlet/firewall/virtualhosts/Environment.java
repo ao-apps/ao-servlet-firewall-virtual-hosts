@@ -132,7 +132,7 @@ public class Environment {
    *
    * @param  domain       The {@link VirtualHost virtual host} must already exist.
    * @param  partialUrls  May not be empty.  Duplicate values are not OK.
-   *                      The first {@link PartialURL partial URL} for a given domain is the {@link #getPrimary(com.aoapps.net.DomainName) primary}.
+   *                      The first {@link PartialURL partial URL} for a given domain is the {@link Environment#getPrimary(com.aoapps.net.DomainName) primary}.
    *
    * @see  VirtualHostManager#getVirtualHost(com.aoapps.net.DomainName)
    *
@@ -158,7 +158,7 @@ public class Environment {
    *
    * @param  domain       The {@link VirtualHost virtual host} must already exist.
    * @param  partialUrls  May not be empty.  Duplicate values are not OK.
-   *                      The first {@link PartialURL partial URL} for a given domain is the {@link #getPrimary(com.aoapps.net.DomainName) primary}.
+   *                      The first {@link PartialURL partial URL} for a given domain is the {@link Environment#getPrimary(com.aoapps.net.DomainName) primary}.
    *
    * @see  VirtualHostManager#getVirtualHost(com.aoapps.net.DomainName)
    *
@@ -172,11 +172,11 @@ public class Environment {
 
   /**
    * Gets the primary partial URL for the given virtual host.
-   * This is the same as the first partial URL from {@link #getPartialURLs(com.aoapps.net.DomainName)}.
+   * This is the same as the first partial URL from {@link Environment#getPartialURLs(com.aoapps.net.DomainName)}.
    *
    * @return  the primary partial URL or {@code null} when the virtual host has not been added to this environment.
    *
-   * @see  #getPartialURLs(com.aoapps.net.DomainName)
+   * @see  Environment#getPartialURLs(com.aoapps.net.DomainName)
    */
   public PartialURL getPrimary(DomainName domain) {
     manager.readLock.lock();
@@ -189,7 +189,7 @@ public class Environment {
 
   /**
    * Gets an unmodifiable copy of all the partial URLs registered for a given virtual host.
-   * The first partial URL is the {@link #getPrimary(com.aoapps.net.DomainName) primary}.
+   * The first partial URL is the {@link Environment#getPrimary(com.aoapps.net.DomainName) primary}.
    *
    * @return  the set of partial URLs or an empty set when the virtual host has not been added to this environment.
    */
